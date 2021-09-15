@@ -6,5 +6,6 @@ controlar las ventas físicas y virtuales de una empresa de manufactura y hacerl
 el correspondiente seguimiento.
 
 Integrantes del grupo:
-Carlos Rojas, Scrum master.
-Juan Felipe Escobar, Administrador de BD.
+Carlos Rojas, Scrum master/Desarrollador.
+Juan Felipe Escobar, Administrador de BD/Desarrollador.
+David Trujillo, Administrador de BD/Desarrollador
