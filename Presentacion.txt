@@ -7,3 +7,4 @@ el correspondiente seguimiento.
 
 Integrantes del grupo:
 Carlos Rojas, Scrum master.
+Juan Felipe Escobar, Administrador de BD.
