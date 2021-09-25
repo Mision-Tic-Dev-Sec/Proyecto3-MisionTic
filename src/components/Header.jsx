@@ -11,16 +11,13 @@ const Header = () => {
           <button className='botonGenerico mainButton'>Administrar ventas</button>
         </li>
         <li>
-          <button className='botonGenerico secondaryButton'>Estado ventas</button>
+          <button className='botonGenerico mainButton'>Administrar productos</button>
         </li>
         <li>
-          <button className='botonGenerico secondaryButton'>Gestión vendedores</button>
-        </li>
+          <button className='botonGenerico mainButton'>Gestión usuarios y roles</button>
+        </li>        
         <li>
-          <button className='botonGenerico secondaryButton'>Gestión usuarios y roles</button>
-        </li>
-        <li>
-          <button className='botonGenerico mainButton'>Salir</button>
+          <button className='botonGenerico secondaryButton'>Salir</button>
         </li>
       </ul>
     </header>
