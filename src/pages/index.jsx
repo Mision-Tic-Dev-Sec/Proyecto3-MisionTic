@@ -2,9 +2,8 @@
 function Index() {
   return (
     <section>
-      <h1>Gestion de ventas</h1>
-      <ul className='breedCardContainer'>
-      </ul>
+      <h1 className="tituloIndex">Bienvenido al modulo de gestión de ventas</h1>
+   
     </section>
   );
 }
