@@ -1,9 +1,11 @@
 import Layout from 'layouts/Layout';
 import Index from 'pages';
 import AdministraVenta from 'pages/administraVenta';
+import AdministraRoles from 'pages/administraRoles';
+import ActualizarRoles from 'pages/actualizarRoles';
 import InfoVenta from 'pages/infoVenta';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import 'styles/styles.css';
+import 'styles/styles.css'; 
 
 function App() {
   return (
@@ -16,6 +18,12 @@ function App() {
             </Route>
             <Route path='/administraVenta' exact>
               <AdministraVenta />
+            </Route>
+            <Route path='/administraRoles' exact>
+              <AdministraRoles />
+            </Route>
+            <Route path='/actualizarRoles' exact>
+              <ActualizarRoles />
             </Route>
             <Route path='/' exact>
               <Index />

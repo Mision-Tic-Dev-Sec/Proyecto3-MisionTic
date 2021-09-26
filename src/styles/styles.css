@@ -116,6 +116,7 @@ ul {
   width: 600px;
   display: flex;
   justify-content: space-between;
+  margin:10px;
 }
 
 .buscar:focus-within {
@@ -213,9 +214,16 @@ ul {
   flex-direction: column;
 }
 
-.formulario>label,input,select{
+.formulario>label,select{
+  font-weight: bolder;
   padding-left: 10px;
   padding-top: 10px;
+}
+
+.formulario>input {
+  margin-left: 10px;
+  margin-top: 10px;
+  padding-left: 5px
 }
 
 .ContenedorBotonesGuardar{
