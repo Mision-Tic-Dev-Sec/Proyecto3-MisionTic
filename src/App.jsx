@@ -11,13 +11,13 @@ function App() {
       <Router>
         <Layout>
           <Switch>
-            <Route path='/infoventa'>
+            <Route path='/infoventa' exact>
               <InfoVenta />
             </Route>
-            <Route path='/administraVenta'>
+            <Route path='/administraVenta' exact>
               <AdministraVenta />
             </Route>
-            <Route path='/'>
+            <Route path='/' exact>
               <Index />
             </Route>
           </Switch>

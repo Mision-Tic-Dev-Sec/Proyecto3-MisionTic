@@ -3,6 +3,13 @@ function InfoVenta() {
     <form action="managerVenta" className = 'formulario'>
       <label htmlFor="">Valor total venta: </label>
       <input type="text" placeholder='Valor venta'/>
+      <label htmlFor="">Estado venta: </label>
+      <select name="estadoVenta" id="estadoVenta">
+        <option value="selectEstado">Elija un estado</option>
+        <option value="selectEstado">En proceso</option>
+        <option value="selectEstado">Canacelada</option>
+        <option value="selectEstado">Entregado</option>
+      </select>
       <label htmlFor="">Fecha venta: </label>
       <input type="text" placeholder='AAAA/MM/DD HH:MM:SS'/>
       <label htmlFor="">Identificación cliente: </label>
@@ -16,7 +23,7 @@ function InfoVenta() {
         <tr>
           <td>
             <select name="producto" id="producto">
-              <option value="selectProducto">Seleccione producto:</option>
+              <option value="selectProducto">Elija un producto</option>
               <option value="selectProducto">010-Galletas</option>
               <option value="selectProducto">011-Chocolate</option>
             </select>
