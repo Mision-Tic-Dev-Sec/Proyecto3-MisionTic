@@ -78,12 +78,42 @@ ul {
   box-shadow: 1px 1px rgb(119, 229, 233);
 }
 
+.botonRegistro {
+  border: 0px;
+  padding: 3px 8px;
+  border-radius: 7px;
+  background-color: burlywood;
+}
+.botonRegistro:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.botonEdit {
+  border: 0px;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.colorBotonEdit{
+  background-color: darksalmon;
+}
+
+.botonEdit:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.botonDelete {
+  background-color: darkred;
+}
+
 .buscar {
   background-color: white;
   border: 1px solid gray;
   padding: 4px;
   border-radius: 8px;
-  width: 300px;
+  width: 600px;
   display: flex;
   justify-content: space-between;
 }
@@ -95,6 +125,7 @@ ul {
 .buscar > input {
   outline: none;
   border: 0px;
+  text-align: start;
 }
 
 .iconoBusqueda:hover {
@@ -144,4 +175,53 @@ ul {
 }
 .backGroundVerde {
   background-color: green;
+}
+
+.administrarHeader{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+}
+
+.table{
+  border: 1px solid black;
+  width: 100%;
+}
+
+.td{
+  border: black 2px;
+  width: 10%;
+  padding-top: 10px;
+}
+
+.tdColor{
+  background-color: darkcyan;
+  border: black;
+}
+
+.colorEncabezado{
+  background-color: grey;
+  font-weight: bolder;
+}
+
+.contenedorTabla{
+  padding-top: 10px;
+}
+
+.formulario{
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario>label,input{
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.ContenedorBotonesGuardar{
+  display: flex;
+  padding-left: 600px;
+  padding-right: 600px;
+  padding-top: 30px;
+  justify-content: space-between;
 }

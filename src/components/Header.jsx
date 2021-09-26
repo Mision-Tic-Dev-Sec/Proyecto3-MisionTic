@@ -1,4 +1,5 @@
 import logo from 'media/logo.png';
+import {Link} from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -8,7 +9,9 @@ const Header = () => {
           <img src={logo} alt='imagen' className='logo' />
         </li>
         <li>
-          <button className='botonGenerico mainButton'>Administrar ventas</button>
+          <Link to = '/administraVenta'>
+            <button className='botonGenerico mainButton'>Administrar ventas</button>
+          </Link>
         </li>
         <li>
           <button className='botonGenerico mainButton'>Administrar productos</button>
