@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 
 const AdministraVenta = () => {
   return <div>
+    <h1 className="breadCrumb">Modulo de ventas</h1>
     <div className ='administrarHeader'>
     <div className='buscar'>
       <select name="filtroVentas" id="filtroVentas">

@@ -12,6 +12,19 @@ ul {
   margin: 0px;
 }
 
+.tituloIndex {
+  font-size: xx-large;
+  font-weight: bolder;
+  font-style:oblique;
+  text-align: center;
+  margin-top: 200px;
+}
+
+.breadCrumb {
+  text-align: center;
+  font-weight: bolder;
+}
+
 .mainContainer {
   display: flex;
   flex-direction: column;
@@ -96,7 +109,7 @@ ul {
 }
 
 .colorBotonEdit{
-  background-color: darksalmon;
+  background-color: rgba(128, 126, 125, 0.418);
 }
 
 .botonEdit:hover {
@@ -105,7 +118,7 @@ ul {
 }
 
 .botonDelete {
-  background-color: darkred;
+  background-color:rgba(128, 126, 125, 0.418);
 }
 
 .buscar {
@@ -185,7 +198,6 @@ ul {
 }
 
 .table{
-  border: 1px solid black;
   width: 100%;
 }
 
@@ -211,19 +223,35 @@ ul {
 
 .formulario{
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
-.formulario>label,select{
+.formulariodiv {
+  display: flex;
+  flex-direction: column;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-top: 20px;
+  font-weight: bolder;
+}
+
+.formulario>label{
   font-weight: bolder;
   padding-left: 10px;
   padding-top: 10px;
 }
 
-.formulario>input {
+.formulario>input,select {
   margin-left: 10px;
   margin-top: 10px;
   padding-left: 5px
+}
+
+.etiquetaAgregarProductoInfo {
+  font-weight: bolder;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 
 .ContenedorBotonesGuardar{

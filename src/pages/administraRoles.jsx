@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 
 const AdministraRoles = () => {
   return <div>
+    <h1 className="breadCrumb">Modulo de usuarios</h1>
     <div className ='administrarHeader'>
       <div className='buscar'>
         <select name="filtroRoles" id="filtroRoles">
