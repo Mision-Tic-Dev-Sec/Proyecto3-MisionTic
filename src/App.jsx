@@ -1,7 +1,7 @@
 import Layout from 'layouts/Layout';
 import Index from 'pages';
-import Bordercollie from 'pages/bordercollie';
-import RhodesianInfoPage from 'pages/rhodesian';
+import AdministraVenta from 'pages/administraVenta';
+import InfoVenta from 'pages/infoVenta';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css';
 
@@ -11,13 +11,13 @@ function App() {
       <Router>
         <Layout>
           <Switch>
-            <Route path='/rhodesian'>
-              <RhodesianInfoPage />
+            <Route path='/infoventa' exact>
+              <InfoVenta />
             </Route>
-            <Route path='/bordercollie'>
-              <Bordercollie />
+            <Route path='/administraVenta' exact>
+              <AdministraVenta />
             </Route>
-            <Route path='/'>
+            <Route path='/' exact>
               <Index />
             </Route>
           </Switch>
