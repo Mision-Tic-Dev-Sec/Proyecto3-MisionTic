@@ -248,6 +248,10 @@ ul {
   font-weight: bolder;
 }
 
+.formulariodiv > select {
+  margin: 0;
+}
+
 .formulario>label{
   font-weight: bolder;
   padding-left: 10px;
