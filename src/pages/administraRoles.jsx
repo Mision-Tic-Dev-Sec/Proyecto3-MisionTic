@@ -13,7 +13,7 @@ const AdministraRoles = () => {
           <option value="Estado">Estado</option>                
         </select>
         <input placeholder="Busqueda" />
-        <i className="fas fa-search button iconoBusqueda"></i>
+        <i className="fas fa-search botonGenerico iconoBusqueda"></i>
       </div>  
     </div>
     <div className = 'contenedorTabla'>

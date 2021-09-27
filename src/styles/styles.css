@@ -134,7 +134,7 @@ ul {
   border-radius: 8px;
   width: 600px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   margin:10px;
 }
 
@@ -146,6 +146,12 @@ ul {
   outline: none;
   border: 0px;
   text-align: start;
+  margin-left: 10px;
+  width: 600px;
+}
+
+.buscar > select {
+  margin:0px;
 }
 
 .iconoBusqueda:hover {

@@ -13,7 +13,7 @@ const AdministraVenta = () => {
         <option value="nombreCliente">Nombre cliente</option>
       </select>
       <input placeholder="Busqueda" />
-      <i className="fas fa-search button iconoBusqueda"></i>
+      <i className="fas fa-search botonGenerico iconoBusqueda"></i>
     </div>
     <Link to ='/infoVenta'>
       <button className = 'botonRegistro'>Registrar venta</button>
