@@ -14,7 +14,10 @@ const AdministraRoles = () => {
         </select>
         <input placeholder="Busqueda" />
         <i className="fas fa-search botonGenerico iconoBusqueda"></i>
-      </div>  
+      </div>
+      <Link to ='/permisosRoles'>
+        <button className = 'botonRegistro'>Modificar permisos</button>
+      </Link>  
     </div>
     <div className = 'contenedorTabla'>
       <table className = 'table'>

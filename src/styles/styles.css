@@ -206,7 +206,9 @@ ul {
 .administrarHeader{
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-top: 5px;
+  padding-left: 10px;
 }
 
 .table{

@@ -3,6 +3,7 @@ import Index from 'pages';
 import AdministraVenta from 'pages/administraVenta';
 import AdministraRoles from 'pages/administraRoles';
 import ActualizarRoles from 'pages/actualizarRoles';
+import PermisosRoles from 'pages/permisosRoles';
 import InfoVenta from 'pages/infoVenta';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css'; 
@@ -24,6 +25,9 @@ function App() {
             </Route>
             <Route path='/actualizarRoles' exact>
               <ActualizarRoles />
+            </Route>
+            <Route path='/permisosRoles' exact>
+              <PermisosRoles />
             </Route>
             <Route path='/' exact>
               <Index />
