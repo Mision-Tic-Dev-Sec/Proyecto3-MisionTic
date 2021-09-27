@@ -2,7 +2,8 @@ import React from 'react'
 
 const PermisosRoles = () => {
     return (
-        
+        <>
+        <h1 className="breadCrumb">Modulo de usuarios > Permisos de usuarios</h1>
         <div className = 'contenedorTabla'>
             <table className = 'table'>
                 <tr className='colorEncabezado'>
@@ -55,8 +56,13 @@ const PermisosRoles = () => {
                     <td align='center' className = 'td'><input type="checkbox" name="modificarpermisosAdmin" id="modificarpermisosAdmin" /></td>
                     <td align='center' className = 'td'><input type="checkbox" name="modificarpermisosVend" id="modificarpermisosVend" /></td>
                 </tr>                       
-            </table>            
+            </table>
+                <div className='ContenedorBotonesGuardar'>
+                <button className= 'botonEdit colorBotonEdit'>Guardar</button>
+                <button className = 'botonEdit botonDelete'>Cancelar</button>
+            </div>            
         </div>
+        </>
     )
 }
 
