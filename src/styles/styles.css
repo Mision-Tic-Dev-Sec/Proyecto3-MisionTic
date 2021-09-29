@@ -225,3 +225,105 @@ ul {
   padding-top: 30px;
   justify-content: space-between;
 }
+
+
+.formularioProductos{
+  position: relative;
+  margin: 20px;
+  width: 275px;
+  height: 350px;
+  margin: 0 auto;
+  background-color: gray;
+  background-position: bottom;
+  background-position: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.nombreProducto{
+  position: absolute;
+  top: 30px;
+  left: 55px;
+}
+
+.identificacionProducto{
+  position: absolute;
+  top: 95px;
+  left: 55px;
+}
+
+.descripcionProducto{
+  position: absolute;
+  top: 160px;
+  left: 55px;
+}
+
+.corto,textarea{
+  border: initial;
+  padding: 0 10px;
+  margin: 0;
+  width: 155px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.corto:focus, textarea:focus{
+  border-radius: 5px;
+}
+
+.corto{
+  vertical-align: middle;
+  border-radius: 5px;
+}
+
+.largo,textarea{
+  border: initial;
+  padding: 0 10px;
+  margin: 0;
+  width: 155px;
+  height: 70px;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.largo:focus, textarea:focus{
+  border-radius: 5px;
+}
+
+.largo{
+  border-radius: 5px;
+}
+
+.tituloSeccion{
+  vertical-align: middle;
+}
+
+.añadirProducto{
+  position: absolute;
+  margin-top: 20px;
+  padding: 5px;
+  top: 255px;
+  left: 105px;
+  justify-content: center;
+  background-color: #1bb76e;
+  border-radius: 4px;
+}
+
+
+.actProducto{
+  position: absolute;
+  margin-top: 20px;
+  padding: 5px;
+  top: 255px;
+  left: 90px;
+  justify-content: center;
+  background-color: #1bb76e;
+  border-radius: 4px;
+}
+
+.tablaProductos{
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid teal;
+}

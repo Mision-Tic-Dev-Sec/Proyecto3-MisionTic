@@ -14,7 +14,9 @@ const Header = () => {
           </Link>
         </li>
         <li>
+          <Link to = "/GestionarProductos">
           <button className='botonGenerico mainButton'>Administrar productos</button>
+          </Link>
         </li>
         <li>
           <button className='botonGenerico mainButton'>Gestión usuarios y roles</button>
