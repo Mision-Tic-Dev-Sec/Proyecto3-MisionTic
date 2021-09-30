@@ -19,7 +19,9 @@ const Header = () => {
           </Link>
         </li>
         <li>
-          <button className='botonGenerico mainButton'>Gestión usuarios y roles</button>
+          <Link to = '/administraRoles'>
+            <button className='botonGenerico mainButton'>Gestión usuarios y roles</button>
+          </Link>
         </li>        
         <li>
           <button className='botonGenerico secondaryButton'>Salir</button>
