@@ -1,10 +1,13 @@
 import Layout from 'layouts/Layout';
 import Index from 'pages';
-import AdministraVenta from './pages/administraVenta';
-import InfoVenta from './pages/infoVenta';
-import GestionarProductos from "./pages/GestionarProductos"
-import AñadirProductos from './pages/AñadirProductos';
-import ActualizarProductos from './pages/ActualizarProductos';
+import AdministraVenta from 'pages/administraVenta';
+import InfoVenta from 'pages/infoVenta';
+import GestionarProductos from "pages/GestionarProductos"
+import AgregarProductos from 'pages/AgregarProductos';
+import ActualizarProductos from 'pages/ActualizarProductos';
+import AdministraRoles from 'pages/administraRoles';
+import ActualizarRoles from 'pages/actualizarRoles';
+import PermisosRoles from 'pages/permisosRoles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css'; 
 
@@ -25,9 +28,8 @@ function App() {
             <Route path="/GestionarProductos">   
               <GestionarProductos/>
             </Route> 
-            <Route path="/AñadirProductos">
-              <AñadirProductos/>
-=======
+            <Route path="/AgregarProductos">
+              <AgregarProductos/>
             <Route path='/administraRoles' exact>
               <AdministraRoles />
             </Route>
