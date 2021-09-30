@@ -4,7 +4,6 @@ function AñadirProductos() {
     return (
         <div class="App">
           <form className="formularioProductos">
-                <Link to="/AñadirProducto">
               <div className="nombreProducto">
                   <label for="nombre">Nombre del Producto</label>
                   <input className="corto" type="text" id="nombre" name="Nombre del producto"/><br/>
@@ -19,8 +18,7 @@ function AñadirProductos() {
               </div> 
               <div className="añadirProducto">
                   <button type="submit">Añadir</button>
-              </div>  
-              </Link> 
+              </div>
           </form>
       </div>
     );
