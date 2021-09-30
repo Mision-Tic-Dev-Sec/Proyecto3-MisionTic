@@ -24,12 +24,12 @@ function App() {
             <Route path='/administraVenta' exact>
               <AdministraVenta />
             </Route>
-
             <Route path="/GestionarProductos">   
               <GestionarProductos/>
             </Route> 
             <Route path="/AgregarProductos">
               <AgregarProductos/>
+            </Route> 
             <Route path='/administraRoles' exact>
               <AdministraRoles />
             </Route>
@@ -39,16 +39,12 @@ function App() {
             <Route path='/permisosRoles' exact>
               <PermisosRoles />
             </Route>
+            <Route path='/ActualizarProductos' exact>
+              <ActualizarProductos/>
+            </Route> 
             <Route path='/' exact>
               <Index />
-
-            </Route>
-
-            </Route> 
-
-            <Route path="/ActualizarProductos">
-              <ActualizarProductos/>
-            </Route>    
+            </Route>   
           </Switch>
         </Layout>
       </Router>
