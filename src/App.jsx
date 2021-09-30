@@ -5,7 +5,6 @@ import AdministraVenta from './pages/administraVenta';
 import InfoVenta from './pages/infoVenta';
 import GestionarProductos from "./pages/GestionarProductos"
 import AñadirProductos from './pages/AñadirProductos';
-import DatosdeProductos from "./pages/DatosdeProductos";
 import ActualizarProductos from './pages/ActualizarProductos';
 
 
@@ -30,10 +29,7 @@ function App() {
             </Route> 
             <Route path="/AñadirProductos">
               <AñadirProductos/>
-            </Route>  
-            <Route path="/DatosdeProductos">
-              <DatosdeProductos/>
-            </Route>
+            </Route> 
             <Route path="/ActualizarProductos">
               <ActualizarProductos/>
             </Route>    
