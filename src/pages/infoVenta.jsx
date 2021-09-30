@@ -1,6 +1,6 @@
 function InfoVenta() {
   return <div>
-    <h1 className="breadCrumb">Modulo de ventas > Información ventas</h1>
+    <h1 className="breadCrumb">Modulo de ventas  Información ventas</h1>
     <form action="managerVenta" className = 'formulario'>
       <div className="formulariodiv">
         <label htmlFor="">Valor total venta: </label>

@@ -9,9 +9,6 @@ function GestionarProductos() {
               </Link>
               </li>
               <li>
-              <Link to="DatosdeProductos"> 
-              <button className="botonGenerico mainButton">Datos de Producto</button>
-              </Link>
               </li>
               <li>
               <Link to="ActualizarProductos"> 
