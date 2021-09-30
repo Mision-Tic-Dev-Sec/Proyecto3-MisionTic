@@ -12,6 +12,19 @@ ul {
   margin: 0px;
 }
 
+.tituloIndex {
+  font-size: xx-large;
+  font-weight: bolder;
+  font-style:oblique;
+  text-align: center;
+  margin-top: 200px;
+}
+
+.breadCrumb {
+  text-align: center;
+  font-weight: bolder;
+}
+
 .mainContainer {
   display: flex;
   flex-direction: column;
@@ -27,8 +40,14 @@ ul {
 .mainContainer > footer {
   background-color: rgb(155, 152, 152);
   padding: 10px;
-  border-bottom: 1px solid grey;
+  border-top: 1px solid grey;
   box-shadow: 1px 1px grey;
+
+}
+
+.footerStyle{
+  display: flex;
+  justify-content: space-between;
 }
 
 .navbar {
@@ -96,7 +115,7 @@ ul {
 }
 
 .colorBotonEdit{
-  background-color: darksalmon;
+  background-color: rgba(128, 126, 125, 0.418);
 }
 
 .botonEdit:hover {
@@ -105,7 +124,7 @@ ul {
 }
 
 .botonDelete {
-  background-color: darkred;
+  background-color:rgba(128, 126, 125, 0.418);
 }
 
 .buscar {
@@ -115,7 +134,8 @@ ul {
   border-radius: 8px;
   width: 600px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  margin:10px;
 }
 
 .buscar:focus-within {
@@ -126,6 +146,12 @@ ul {
   outline: none;
   border: 0px;
   text-align: start;
+  margin-left: 10px;
+  width: 600px;
+}
+
+.buscar > select {
+  margin:0px;
 }
 
 .iconoBusqueda:hover {
@@ -180,11 +206,12 @@ ul {
 .administrarHeader{
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-top: 5px;
+  padding-left: 10px;
 }
 
 .table{
-  border: 1px solid black;
   width: 100%;
 }
 
@@ -210,10 +237,37 @@ ul {
 
 .formulario{
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
-.formulario>label,input,select{
+.formulariodiv {
+  display: flex;
+  flex-direction: column;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-top: 20px;
+  font-weight: bolder;
+}
+
+.formulariodiv > select {
+  margin: 0;
+}
+
+.formulario>label{
+  font-weight: bolder;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.formulario>input,select {
+  margin-left: 10px;
+  margin-top: 10px;
+  padding-left: 5px
+}
+
+.etiquetaAgregarProductoInfo {
+  font-weight: bolder;
   padding-left: 10px;
   padding-top: 10px;
 }

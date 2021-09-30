@@ -1,8 +1,13 @@
-import  { Link } from "react-router-dom";   
+import AñadirProductos from "./AñadirProductos";
 
-function DatosdeProductos() {
+
+const DatosdeProductos = ({listaProductos}) =>  {
+    
+
     return (
     <div>
+    <input placeholder="Busqueda" />
+    <i className="fas fa-search button iconoBusqueda "></i>
     <table className="tablaProductos">
         <caption>Datos del producto</caption>
         <tr>
