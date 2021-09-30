@@ -16,7 +16,10 @@ import InfoVenta from 'pages/infoVenta';
 >>>>>>> fe934222840dacab5a4514fcee4af42586a0577a
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css'; 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fe934222840dacab5a4514fcee4af42586a0577a
 
 function App() {
   return (
@@ -31,6 +34,7 @@ function App() {
               <AdministraVenta />
             </Route>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <Route path="/GestionarProductos">   
               <GestionarProductos/>
             </Route> 
@@ -40,6 +44,8 @@ function App() {
             <Route path="/DatosdeProductos">
               <DatosdeProductos/>
 =======
+=======
+>>>>>>> fe934222840dacab5a4514fcee4af42586a0577a
             <Route path='/administraRoles' exact>
               <AdministraRoles />
             </Route>
