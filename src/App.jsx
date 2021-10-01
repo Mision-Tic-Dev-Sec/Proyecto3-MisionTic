@@ -10,24 +10,28 @@ import ActualizarRoles from 'pages/actualizarRoles';
 import PermisosRoles from 'pages/permisosRoles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css'; 
+import Login from 'pages/Login';
 
 
 function App() {
   return (
     <div className='App'>
       <Router>
+      <Switch>
+        <Route path='/' exact>
+          <Login />
+        </Route>
         <Layout>
-          <Switch>
             <Route path='/infoventa' exact>
               <InfoVenta />
             </Route>
             <Route path='/administraVenta' exact>
               <AdministraVenta />
             </Route>
-            <Route path="/GestionarProductos">   
+            <Route path="/GestionarProductos" exact>   
               <GestionarProductos/>
             </Route> 
-            <Route path="/AgregarProductos">
+            <Route path="/AgregarProductos" exact>
               <AgregarProductos/>
             </Route> 
             <Route path='/administraRoles' exact>
@@ -42,11 +46,11 @@ function App() {
             <Route path='/ActualizarProductos' exact>
               <ActualizarProductos/>
             </Route> 
-            <Route path='/' exact>
+            <Route path='/Index' exact>
               <Index />
-            </Route>   
-          </Switch>
-        </Layout>
+            </Route>
+          </Layout>
+        </Switch>
       </Router>
     </div>
   );
