@@ -24,7 +24,9 @@ const Header = () => {
           </Link>
         </li>        
         <li>
-          <button className='botonGenerico secondaryButton'>Salir</button>
+          <Link to='/'>
+            <button className='botonGenerico secondaryButton'>Salir</button>
+          </Link>
         </li>
       </ul>
     </header>
