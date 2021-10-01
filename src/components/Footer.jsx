@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return <div className='bg-purple-200'>
-    <ul className="flex justify-between font-bold">
+    <ul className="flex justify-between font-bold text-gray-800">
       <li>DevSec 2021 <i class="far fa-copyright"></i></li>
       <li>Telefono: 325478921</li>
       <li>Direccion: cra #12-03</li>
