@@ -1,21 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import TriggerDarkMode from './TriggerDarkMode';
+import ImagenLogo from 'components/ImagenLogo';
 
 const Navbar = () => {
   return (
-    <nav className='bg-red-400'>
+    <nav className='bg-purple-100'>
       <ul className='flex w-full justify-between my-3'>
-        <li>Logo</li>
-        <li>Navegacion1</li>
-        <li>Navegacion2</li>
+        <li className = 'h-50'><ImagenLogo/></li>
         <li>
-          <TriggerDarkMode />
+          <Link to='/admin/vehiculos'>
+            <button className ='bg-blue-800 p-2 text-white rounded-lg shadow-md hover:bg-blue-900'>Administrar ventas</button>
+          </Link>
+        </li>
+        <li>
+          <button className ='bg-blue-800 p-2 text-white rounded-lg shadow-md hover:bg-blue-900'>Administrar productos</button>
+        </li>
+        <li>
+          <button className ='bg-blue-800 p-2 text-white rounded-lg shadow-md hover:bg-blue-900'>Administrar roles</button>
         </li>
         <li className='px-3'>
           <Link to='/login'>
             <button className='bg-indigo-500 p-2 text-white rounded-lg shadow-md hover:bg-indigo-700'>
-              Iniciar Sesión
+              Salir
             </button>
           </Link>
         </li>
