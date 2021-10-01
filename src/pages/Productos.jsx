@@ -93,6 +93,16 @@ const TablaProductos = ({ listaProductos }) => {
   return (
     <div className='flex flex-col items-center justify-center'>
       <h2 className='text-2xl font-extrabold text-gray-800'>Todos los productos</h2>
+      <div className="w-96 bg-white border border-gray-300 rounded-xl flex m-3 self-start py-2">
+        <select required defaultValue={0} name="filtroProductos" className="focus-within:outline-none rounde-l px-2">
+          <option disabled value={0}>Elija el filtro</option>
+          <option>Id producto</option>
+          <option>Descripción</option>
+          <option>Precio</option>
+        </select>
+        <input type="text" name="busquedaProductos" placeholder="Busqueda" className="focus-within:outline-none m-0 w-72"/>
+        <button className="pr-2 transform hover:scale-125"><i class="fas fa-search"></i></button>
+      </div>
       <table className = 'border border-gray-200'>
         <thead className = 'border border-gray-200'>
           <tr>
