@@ -1,4 +1,9 @@
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css'
+
 function InfoVenta() {
+  const notify = () => toast.success("Registro exitoso !");
   return <div>
     <h1 className="breadCrumb">Modulo de ventas  Información ventas</h1>
     <form action="managerVenta" className = 'formulario'>
@@ -60,9 +65,10 @@ function InfoVenta() {
         </tr>
     </table>
     <div className='ContenedorBotonesGuardar'>
-      <button className= 'botonEdit colorBotonEdit'>Guardar</button>
+      <button onClick={notify} className= 'botonEdit colorBotonEdit'>Guardar</button>
       <button className = 'botonEdit botonDelete'>Cancelar</button>
     </div>
+    <ToastContainer position="bottom-center" autoClose={3000}/>
   </div>;
 }
 

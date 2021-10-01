@@ -1,4 +1,9 @@
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 function ActualizarRoles() {
+    const notify = () => toast.success("Registro exitoso !");
     return <div>
         <h1 className="breadCrumb">Modulo de usuarios > Actualizar información</h1>
         <form action="managerRoles" className = 'formulario'>
@@ -33,9 +38,10 @@ function ActualizarRoles() {
         </div>                   
         </form>
         <div className='ContenedorBotonesGuardar'>
-            <button className= 'botonEdit colorBotonEdit'>Guardar</button>
+            <button onClick={notify} className= 'botonEdit colorBotonEdit'>Guardar</button>
             <button className = 'botonEdit botonDelete'>Cancelar</button>
         </div>
+        <ToastContainer position="bottom-center" autoClose={3000}/>
     </div>;
   }
   

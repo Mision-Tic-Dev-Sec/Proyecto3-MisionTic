@@ -4,7 +4,7 @@ function GestionarProductos() {
     return <div>
           <ul className="navbar">      
               <li>
-              <Link to="AñadirProductos"> 
+              <Link to="AgregarProductos"> 
               <button className="botonGenerico mainButton">Ingresar Producto</button>
               </Link>
               </li>

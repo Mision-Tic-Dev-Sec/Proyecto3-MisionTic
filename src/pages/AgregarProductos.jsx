@@ -1,6 +1,6 @@
 import React, { useEffect, useState }from "react";
     
-const AñadirProductos = () => {
+const AgregarProductos = () => {
     const [mostrarTabla, setMostrarTabla] = useState(true)
     const [TextoBoton, setTextoBoton] =useState("Añadir Producto")
     const [Producto, setProducto] = useState([])
@@ -107,4 +107,4 @@ const TablaProductos = ({listaProductos}) =>{
     </div>)
 }
 
-export default AñadirProductos;
+export default AgregarProductos;

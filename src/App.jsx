@@ -32,7 +32,7 @@ function App() {
               <GestionarProductos/>
             </Route> 
             <Route path="/AgregarProductos" exact>
-              <AgregarProductos/>
+              <AgregarProductos />
             </Route> 
             <Route path='/administraRoles' exact>
               <AdministraRoles />
