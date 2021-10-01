@@ -13,7 +13,7 @@ const Login = () => {
                 </label> 
                 <label className='flex flex-col font-extrabold my-3' htmlFor="password">
                     Ingresa el password:
-                    <input className='focus-within:outline-none focus:ring-2 border border-gray-400 rounded-md p-2'type="email" name="password" required />   
+                    <input className='focus-within:outline-none focus:ring-2 border border-gray-400 rounded-md p-2'type="password" name="password" required />   
                 </label>
                 <Link to='/Index'>
                     <button className='bg-green-300 p-2 rounded-lg shadow-md transform hover:scale-125'>Ingresar</button>
