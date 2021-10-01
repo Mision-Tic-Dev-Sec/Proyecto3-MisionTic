@@ -6,34 +6,34 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const productosBackend = [
   {
-    idProducto: 'Corolla',
-    nombreProducto: 'Toyota',
-    precio: 2014,
+    idProducto: '001',
+    nombreProducto: 'Jamon',
+    precio: 4500,
   },
   {
-    idProducto: 'Corolla',
-    nombreProducto: 'Toyota',
-    precio: 2014,
+    idProducto: '002',
+    nombreProducto: 'Pan tajado',
+    precio: 2000,
   },
   {
-    idProducto: 'Corolla',
-    nombreProducto: 'Toyota',
-    precio: 2014,
+    idProducto: '003',
+    nombreProducto: 'Queso',
+    precio: 4000,
   },
   {
-    idProducto: 'Corolla',
-    nombreProducto: 'Toyota',
-    precio: 2014,
+    idProducto: '004',
+    nombreProducto: 'Salsa de tomate',
+    precio: 2500,
   },
   {
-    idProducto: 'Corolla',
-    nombreProducto: 'Toyota',
-    precio: 2014,
+    idProducto: '005',
+    nombreProducto: 'Arroz',
+    precio: 2612,
   },
   {
-    idProducto: 'Corolla',
-    nombreProducto: 'Toyota',
-    precio: 2014,
+    idProducto: '006',
+    nombreProducto: 'Azucar',
+    precio: 3000,
   },
 ];
 
