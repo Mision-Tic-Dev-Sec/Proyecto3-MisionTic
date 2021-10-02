@@ -291,7 +291,7 @@ const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) =
                   required
                 />
             </label>
-            <button className="bg-blue-600 hover:bg-blue-900 rounded-full p-2">Agregar</button>
+            <button type="button" className="bg-blue-600 hover:bg-blue-900 rounded-full p-2">Agregar</button>
         </div>
         <div className='self-center w-full'>          
           <table className = 'border border-gray-200 m-3 w-full'>
