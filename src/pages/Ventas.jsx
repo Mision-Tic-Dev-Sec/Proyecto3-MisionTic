@@ -266,7 +266,7 @@ const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) =
                 name='nombreProducto'
                 className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
                 type='text'
-                placeholder='Carlos Medina'
+                placeholder='Chocolate'
                 required
               />
             </label>
@@ -275,7 +275,7 @@ const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) =
               <input
                 name='precioUnitario'
                 className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
-                type='text'
+                type='number'
                 placeholder='2000'
                 required
               />
@@ -285,8 +285,8 @@ const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) =
               <input
                   name='cantidad'
                   className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
-                  type='text'
-                  placeholder='Carlos Medina'
+                  type='number'
+                  placeholder='10'
                   required
                 />
             </label>
