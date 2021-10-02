@@ -18,8 +18,8 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link>
-            <button className ='bg-blue-800 p-2 text-white rounded-lg shadow-md hover:bg-blue-900'>Administrar roles</button>
+          <Link to= '/usuarios'>
+            <button className ='bg-blue-800 p-2 text-white rounded-lg shadow-md hover:bg-blue-900'>Administrar usuarios</button>
           </Link>
         </li>
         <li className='px-3'>
