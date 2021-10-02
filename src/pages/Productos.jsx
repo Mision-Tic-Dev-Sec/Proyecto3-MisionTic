@@ -109,6 +109,7 @@ const TablaProductos = ({ listaProductos }) => {
             <th align="center" className = 'p-2'>Id del producto</th>
             <th align="center" className = 'p-2'>Descripción del producto</th>
             <th align="center" className = 'p-2'>Precio del producto</th>
+            <th align="center" className = 'p-2'>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -118,6 +119,7 @@ const TablaProductos = ({ listaProductos }) => {
                 <td align="center" className = 'p-2'>{producto.idProducto}</td>
                 <td align="center" className = 'p-2'>{producto.nombreProducto}</td>
                 <td align="center" className = 'p-2'>{producto.precio}</td>
+                <td align="center" className = 'p-2'><button className="bg-gray-300 p-1 hover:bg-gray-500 rounded-lg">Actualizar</button></td>
               </tr>
             );
           })}
@@ -142,7 +144,7 @@ const FormularioCreacionProductos = ({ setMostrarTabla, listaProductos, setProdu
     setMostrarTabla(true);
     setProductos([...listaProductos, nuevoProducto]);
     // identificar el caso de éxito y mostrar un toast de éxito
-    toast.success('Vehículo agregado con éxito');
+    toast.success('Producto agregado con éxito');
     // identificar el caso de error y mostrar un toast de error
     // toast.error('Error creando un vehículo');
   };

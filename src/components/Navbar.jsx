@@ -8,7 +8,7 @@ const Navbar = () => {
       <ul className='flex w-full justify-between my-3 items-center'>
         <li className = 'h-50'><ImagenLogo/></li>
         <li>
-          <Link to='/admin/vehiculos'>
+          <Link to='/ventas'>
             <button className ='bg-blue-800 p-2 text-white rounded-lg shadow-md hover:bg-blue-900'>Administrar ventas</button>
           </Link>
         </li>

@@ -11,6 +11,7 @@ import Registro from 'pages/auth/Registro';
 import AuthLayout from 'layouts/AuthLayout';
 import { DarkModeContext } from 'context/darkMode';
 import Productos from 'pages/Productos';
+import Ventas from 'pages/Ventas';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -47,9 +48,12 @@ function App() {
                 </Switch>
               </AuthLayout>
             </Route>
-            <Route path={['/', '/productos']}>
+            <Route path={['/', '/productos', 'ventas']}>
               <PublicLayout>
                 <Switch>
+                  <Route path='/ventas'>
+                   <Ventas />
+                  </Route>
                   <Route path='/productos'>
                    <Productos />
                   </Route>
