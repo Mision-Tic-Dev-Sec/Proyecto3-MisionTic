@@ -158,7 +158,7 @@ const TablaUsuarios = ({ listaUsuarios }) => {
   );
 };
 
-const ModificarPermisos = ({  }) => {
+const ModificarPermisos = ({setMostrarTabla, mostrarTabla}) => {
   
   return (
     <div className='flex flex-col items-center justify-center w-full'>
@@ -221,6 +221,7 @@ const ModificarPermisos = ({  }) => {
       </table>
       <button
           className='bg-blue-600 px-6 py-2 rounded-full shadow-md transform hover:scale-110 text-white my-3'
+          // onClick={()=>{setMostrarTabla(!mostrarTabla)}}
           onClick={()=>{toast.success('Registro exitoso')}}
         >
           Guardar

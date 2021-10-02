@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Productos from 'pages/Productos';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
 // que diga si el usuario es mayor de edad o no
 
@@ -13,7 +12,7 @@ const ventasBackend = [
     valorVenta: 10000,
     idProducto: '001',
     cantidad: 2,
-    precioUnitario: [2300, 3200, 4000],
+    precioUnitario: 2300,
     fechaVenta: '02/09/2021 12:00',
     identificacion: 12099384,
     nombreCliente: 'Juan Valdez',
@@ -23,14 +22,14 @@ const ventasBackend = [
   {
     idVenta: '002',
     valorVenta: 100000,
-    idProducto: '001',
+    idProducto: '003',
     cantidad: 2,
-    precioUnitario: 2300,
-    fechaVenta: '02/09/2021 12:00',
-    identificacion: 12099384,
-    nombreCliente: 'Juan Valdez',
-    vendedor: 'Jhon Valencia',
-    estado: 'En proceso'
+    precioUnitario: 2500,
+    fechaVenta: '02/09/2021 06:00',
+    identificacion: 12339384,
+    nombreCliente: 'Raul Valdez',
+    vendedor: 'Victor Valencia',
+    estado: 'Cancelado'
   }
 ];
 
@@ -181,7 +180,7 @@ const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) =
             <input
               className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
               type='number'
-              placeholder='Chocolate'
+              placeholder='1000000'
               name='valorVenta'
               required
             />
