@@ -3,7 +3,7 @@ import jamon from 'media/jamon.jpg';
 import queso from 'media/queso.jpg';
 import chocolate from 'media/chocolate.jpg';
 
-const Index = () => {
+const Inicio = () => {
   return (
     <div className='flex flex-col items-center h-full w-wfull justify-center'>
       <h1 className='text-8xl text-gray-800 my-3'>Bienvenidos</h1>
@@ -18,4 +18,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Inicio;
