@@ -8,13 +8,14 @@ import AuthLayout from 'layouts/AuthLayout';
 import Productos from 'pages/Productos';
 import Ventas from 'pages/Ventas';
 import Usuarios from 'pages/Usuarios';
+import Vehiculos from 'pages/Vehiculos';
 
 function App() {
   return (
     <div className='App'>
         <Router>
           <Switch>
-            <Route path={['/inicio', '/productos', '/ventas', '/usuarios']}>
+            <Route path={['/inicio', '/productos', '/ventas', '/usuarios', '/vehiculos']}>
               <PublicLayout>
                 <Switch>
                   <Route path='/ventas'>
@@ -25,6 +26,9 @@ function App() {
                   </Route>
                   <Route path='/usuarios'>
                    <Usuarios />
+                  </Route>
+                  <Route path='/vehiculos'>
+                   <Vehiculos />
                   </Route>
                   <Route path='/inicio'>
                    <Inicio />
