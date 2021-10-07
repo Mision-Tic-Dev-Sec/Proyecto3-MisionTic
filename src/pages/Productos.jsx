@@ -1,52 +1,34 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
+import { nanoid } from 'nanoid';
+import { Dialog, Tooltip } from '@material-ui/core';
+import 'react-toastify/dist/ReactToastify.css';
+import { obtenerProductos } from 'utils/api';
 import 'react-toastify/dist/ReactToastify.css';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
 // que diga si el usuario es mayor de edad o no
-
-const productosBackend = [
-  {
-    idProducto: '001',
-    nombreProducto: 'Jamon',
-    precio: 4500,
-  },
-  {
-    idProducto: '002',
-    nombreProducto: 'Pan tajado',
-    precio: 2000,
-  },
-  {
-    idProducto: '003',
-    nombreProducto: 'Queso',
-    precio: 4000,
-  },
-  {
-    idProducto: '004',
-    nombreProducto: 'Salsa de tomate',
-    precio: 2500,
-  },
-  {
-    idProducto: '005',
-    nombreProducto: 'Arroz',
-    precio: 2612,
-  },
-  {
-    idProducto: '006',
-    nombreProducto: 'Azucar',
-    precio: 3000,
-  },
-];
 
 const Productos = () => {
   const [mostrarTabla, setMostrarTabla] = useState(true);
   const [productos, setProductos] = useState([]);
   const [textoBoton, setTextoBoton] = useState('Crear Nuevo producto');
   const [colorBoton, setColorBoton] = useState('indigo');
+  const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
+
+  useEffect(()=>{
+    console.log('consulta',ejecutarConsulta);
+    if (ejecutarConsulta){
+      obtenerProductos(setProductos,setEjecutarConsulta)
+    }
+  }, [ejecutarConsulta]);
 
   useEffect(() => {
     //obtener lista de vehículos desde el backend
-    setProductos(productosBackend);
-  }, []);
+    if (mostrarTabla){
+      setEjecutarConsulta(true);
+    }
+  }, [mostrarTabla]);
 
   useEffect(() => {
     if (mostrarTabla) {
@@ -73,7 +55,7 @@ const Productos = () => {
         </button>
       </div>
       {mostrarTabla ? (
-        <TablaProductos listaProductos={productos} />
+        <TablaProductos listaProductos={productos} setEjecutarConsulta={setEjecutarConsulta} />
       ) : (
         <FormularioCreacionProductos
           setMostrarTabla={setMostrarTabla}
@@ -86,53 +68,222 @@ const Productos = () => {
   );
 };
 
-const TablaProductos = ({ listaProductos }) => {
+const TablaProductos = ({ listaProductos, setEjecutarConsulta }) => {
+  const [busqueda, setBusqueda] = useState('');
+  const [productosFiltrados, setProductosFiltrados] = useState(listaProductos);
+
   useEffect(() => {
-    console.log('este es el listado de productos en el componente de tabla', listaProductos);
-  }, [listaProductos]);
+    setProductosFiltrados(
+      listaProductos.filter((elemento)=> {
+        return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
+      })
+    );
+  }, [busqueda, listaProductos]);
+
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center justify-center w-full'>
+      <input
+        value={busqueda}
+        onChange={(e) => setBusqueda(e.target.value)}
+        placeholder='Buscar'
+        className='border-2 border-gray-700 px-3 py-1 self-start rounded-md focus:outline-none focus:border-indigo-500'
+      />
       <h2 className='text-2xl font-extrabold text-gray-800'>Todos los productos</h2>
-      <div className="w-96 bg-white border border-gray-300 rounded-xl flex m-3 self-start py-2">
-        <select required defaultValue={0} name="filtroProductos" className="focus-within:outline-none rounde-l px-2">
-          <option disabled value={0}>Elija el filtro</option>
-          <option>Id producto</option>
-          <option>Descripción</option>
-          <option>Precio</option>
-        </select>
-        <input type="text" name="busquedaProductos" placeholder="Busqueda" className="focus-within:outline-none m-0 w-72"/>
-        <button className="pr-2 transform hover:scale-125"><i class="fas fa-search"></i></button>
+      <div className='hidden md:flex w-full'>
+        <table className='tabla'>
+          <thead>
+            <tr>
+              <th>Id del producto</th>
+              <th>Nombre del producto</th>
+              <th>Precio del producto</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {productosFiltrados.map((producto) => {
+              return (
+                <FilaProducto
+                  key={nanoid()}
+                  producto={producto}
+                  setEjecutarConsulta={setEjecutarConsulta}
+                />
+              );
+            })}
+          </tbody>
+        </table>
       </div>
-      <table className = 'border border-gray-200'>
-        <thead className = 'border border-gray-200'>
-          <tr>
-            <th align="center" className = 'p-2'>Id del producto</th>
-            <th align="center" className = 'p-2'>Descripción del producto</th>
-            <th align="center" className = 'p-2'>Precio del producto</th>
-            <th align="center" className = 'p-2'>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {listaProductos.map((producto) => {
-            return (
-              <tr>
-                <td align="center" className = 'p-2'>{producto.idProducto}</td>
-                <td align="center" className = 'p-2'>{producto.nombreProducto}</td>
-                <td align="center" className = 'p-2'>{producto.precio}</td>
-                <td align="center" className = 'p-2'><button className="bg-gray-300 p-1 hover:bg-gray-500 rounded-lg">Actualizar</button></td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className='flex flex-col w-full m-2 md:hidden'>
+        {productosFiltrados.map((el) => {
+          return (
+            <div className='bg-gray-400 m-2 shadow-xl flex flex-col p-2 rounded-xl'>
+              <span>{el.idProducto}</span>
+              <span>{el.nombreProducto}</span>
+              <span>{el.precio}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
+  );
+};
+
+const FilaProducto = ({ producto, setEjecutarConsulta }) => {
+  const [edit, setEdit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [infoNuevoProducto, setInfoNuevoProducto] = useState({
+    idProducto: producto.idProducto,
+    nombreProducto: producto.nombreProducto,
+    precio: producto.precio,
+  });
+  const actualizarProducto = async () => {
+    //enviar la info al backend
+    const options = {
+      method: 'PATCH',
+      url: 'http://localhost:5000/productos/editar/',
+      headers: { 'Content-Type': 'application/json' },
+      data: { ...infoNuevoProducto, id: producto._id },
+    };
+
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        toast.success('Producto modificado con éxito');
+        setEdit(false);
+        setEjecutarConsulta(true);
+      })
+      .catch(function (error) {
+        toast.error('Error modificando el producto');
+        console.error(error);
+      });
+  };
+
+  const eliminarProducto = async () => {
+    const options = {
+      method: 'DELETE',
+      url: 'http://localhost:5000/productos/eliminar/',
+      headers: { 'Content-Type': 'application/json' },
+      data: { id: producto._id },
+    };
+
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        toast.success('Producto eliminado con éxito');
+        setEjecutarConsulta(true);
+      })
+      .catch(function (error) {
+        console.error(error);
+        toast.error('Error eliminando el producto');
+      });
+    setOpenDialog(false);
+  };
+
+  return (
+    <tr>
+      {edit ? (
+        <>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevoProducto.idProducto}
+              onChange={(e) => setInfoNuevoProducto({ ...infoNuevoProducto, idProducto: e.target.value })}
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevoProducto.nombreProducto}
+              onChange={(e) =>
+                setInfoNuevoProducto({ ...infoNuevoProducto, nombreProducto: e.target.value })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevoProducto.precio}
+              onChange={(e) =>
+                setInfoNuevoProducto({ ...infoNuevoProducto, precio: e.target.value })
+              }
+            />
+          </td>
+        </>
+      ) : (
+        <>
+          <td>{producto.idProducto}</td>
+          <td>{producto.nombreProducto}</td>
+          <td>{producto.precio}</td>
+        </>
+      )}
+      <td>
+        <div className='flex w-full justify-around'>
+          {edit ? (
+            <>
+              <Tooltip title='Confirmar Edición' arrow>
+                <i
+                  onClick={() => actualizarProducto()}
+                  className='fas fa-check text-green-700 hover:text-green-500'
+                />
+              </Tooltip>
+              <Tooltip title='Cancelar edición' arrow>
+                <i
+                  onClick={() => setEdit(!edit)}
+                  className='fas fa-ban text-yellow-700 hover:text-yellow-500'
+                />
+              </Tooltip>
+            </>
+          ) : (
+            <>
+              <Tooltip title='Editar producto' arrow>
+                <i
+                  onClick={() => setEdit(!edit)}
+                  className='fas fa-pencil-alt text-yellow-700 hover:text-yellow-500'
+                />
+              </Tooltip>
+              <Tooltip title='Eliminar producto' arrow>
+                <i
+                  onClick={() => setOpenDialog(true)}
+                  className='fas fa-trash text-red-700 hover:text-red-500'
+                />
+              </Tooltip>
+            </>
+          )}
+        </div>
+        <Dialog open={openDialog}>
+          <div className='p-8 flex flex-col'>
+            <h1 className='text-gray-900 text-2xl font-bold'>
+              ¿Está seguro de querer eliminar el producto?
+            </h1>
+            <div className='flex w-full items-center justify-center my-4'>
+              <button
+                onClick={() => eliminarProducto()}
+                className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'
+              >
+                Sí
+              </button>
+              <button
+                onClick={() => setOpenDialog(false)}
+                className='mx-2 px-4 py-2 bg-red-500 text-white hover:bg-red-700 rounded-md shadow-md'
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </Dialog>
+      </td>
+    </tr>
   );
 };
 
 const FormularioCreacionProductos = ({ setMostrarTabla, listaProductos, setProductos }) => {
   const form = useRef(null);
 
-  const submitForm = (e) => {
+  const submitForm = async(e) => {
     e.preventDefault();
     const fd = new FormData(form.current);
     
@@ -141,12 +292,25 @@ const FormularioCreacionProductos = ({ setMostrarTabla, listaProductos, setProdu
       nuevoProducto[key] = value;
     });
 
+    const options = {
+      method: 'POST',
+      url: 'http://localhost:5000/productos/nuevo/',
+      headers: { 'Content-Type': 'application/json' },
+      data: { idProducto: nuevoProducto.idProducto, nombreProducto: nuevoProducto.nombreProducto, precio: nuevoProducto.precio },
+    };
+
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        toast.success('producto agregado con éxito');
+      })
+      .catch(function (error) {
+        console.error(error);
+        toast.error('Error creando un producto');
+      });
+
     setMostrarTabla(true);
-    setProductos([...listaProductos, nuevoProducto]);
-    // identificar el caso de éxito y mostrar un toast de éxito
-    toast.success('Producto agregado con éxito');
-    // identificar el caso de error y mostrar un toast de error
-    // toast.error('Error creando un vehículo');
   };
 
   return (
