@@ -137,7 +137,7 @@ const FilaVehiculo = ({ vehiculo, setEjecutarConsulta }) => {
     //enviar la info al backend
     const options = {
       method: 'PATCH',
-      url: 'https://vast-waters-45728.herokuapp.com/vehicle/update/',
+      url: 'http://localhost:5000/vehiculos/editar/',
       headers: { 'Content-Type': 'application/json' },
       data: { ...infoNuevoVehiculo, id: vehiculo._id },
     };
@@ -159,7 +159,7 @@ const FilaVehiculo = ({ vehiculo, setEjecutarConsulta }) => {
   const eliminarVehiculo = async () => {
     const options = {
       method: 'DELETE',
-      url: 'https://vast-waters-45728.herokuapp.com/vehicle/delete/',
+      url: 'http://localhost:5000/vehiculos/eliminar/',
       headers: { 'Content-Type': 'application/json' },
       data: { id: vehiculo._id },
     };
@@ -292,7 +292,7 @@ const FormularioCreacionVehiculos = ({ setMostrarTabla, listaVehiculos, setVehic
 
     const options = {
       method: 'POST',
-      url: 'https://vast-waters-45728.herokuapp.com/vehicle/create',
+      url: 'http://localhost:5000/vehiculos/nuevo/',
       headers: { 'Content-Type': 'application/json' },
       data: { name: nuevoVehiculo.name, brand: nuevoVehiculo.brand, model: nuevoVehiculo.model },
     };
