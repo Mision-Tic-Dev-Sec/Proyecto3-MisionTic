@@ -91,24 +91,24 @@ const TablaUsuarios = ({ listaUsuarios, setEjecutarConsulta }) => {
   return (
     <div className='flex flex-col items-center justify-center'>
       <h2 className='text-2xl font-extrabold text-gray-800'>Todos los Usuarios</h2>
-      <div className="w-96 bg-white border border-gray-300 rounded-xl flex m-3 self-start py-2">
+      <div className="w-96 bg-white border border-gray-300 rounded-xl flex m-3 self-start py-2 justify-between">
         <input 
         value={busqueda} 
         onChange={(e) => setBusqueda(e.target.value)} 
         placeholder="Busqueda" 
-        className="focus-within:outline-none m-0 w-72"/>
-        <div className="pr-2 transform hover:scale-125"><i class="fas fa-search"></i></div>
+        className="focus-within:outline-none m-0 w-72 pl-2"/>
+        <div className="pr-2"><i class="fas fa-search"></i></div>
       </div>
-      <table className = 'border border-gray-200 tabla'>
-        <thead className = 'border border-gray-200'>
+      <table className = 'tabla'>
+        <thead>
           <tr>
-            <th align="center" className = 'p-2'>Id del Usuario</th>
-            <th align="center" className = 'p-2'>Nombre Usuario</th>
-            <th align="center" className = 'p-2'>Correo</th>
-            <th align="center" className = 'p-2'>Rol</th>
-            <th align="center" className = 'p-2'>Estado</th>
-            <th align="center" className = 'p-2'>Fecha Ingreso</th>
-            <th align="center" className = 'p-2'>Acciones</th>            
+            <th>Id del Usuario</th>
+            <th>Nombre Usuario</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Fecha Ingreso</th>
+            <th>Acciones</th>            
           </tr>
         </thead>
         <tbody>
@@ -131,12 +131,12 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
   const [edit, setEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [infoNuevoUsuario, setInfoNuevoUsuario] = useState({
-    id: usuario.idusuario,
-    name: usuario.nombreUsuario,
-    mail: usuario.correo,
+    id: usuario._id,
+    name: usuario.name,
+    mail: usuario.mail,
     rol: usuario.rol,
-    state: usuario.estado,
-    date: usuario.fechaIngreso
+    state: usuario.state,
+    date: usuario.date
   });
 
   const actualizarUsuario = async () => {
@@ -188,6 +188,9 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
     <tr>
       {edit ? (
         <>
+          <td>{usuario._id}</td>
+          <td>{usuario.name}</td>
+          <td>{usuario.mail}</td>
           <td>
             <select
               className='bg-white border border-gray-600 p-2 rounded-lg m-2 focus-within:outline-none border-none'
@@ -218,16 +221,17 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
               <option>No autorizado</option>
               <option>Pendiente</option>
             </select>
-          </td>         
+          </td>
+          <td>{usuario.date}</td>        
           
         </>
       ) : (
         <>
-          <td>{usuario.id}</td>
+          <td>{usuario._id}</td>
           <td>{usuario.name}</td>
           <td>{usuario.mail}</td>
-          <td>{usuario.state}</td>
           <td>{usuario.rol}</td>
+          <td>{usuario.state}</td>          
           <td>{usuario.date}</td>
         </>
       )}
@@ -294,61 +298,61 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
 const ModificarPermisos = ({setMostrarTabla, mostrarTabla}) => {
   
   return (
-    <div className='flex flex-col items-center justify-center w-full'>
+    <div className='flex flex-col items-center justify-center w-96'>
       <h2 className='text-2xl font-extrabold text-gray-800 my-4'>Permisos roles</h2>
-      <table className = 'border border-gray-200 w-2/5'>
-        <thead className = 'border border-gray-200'>
+      <table className = 'tabla'>
+        <thead>
           <tr>
-            <th align="center" className = 'p-2'>Permisos</th>
-            <th align="center" className = 'p-2'>Administrador</th>
-            <th align="center" className = 'p-2'>Vendedor</th>            
+            <th>Permisos</th>
+            <th>Administrador</th>
+            <th>Vendedor</th>            
           </tr>
         </thead>
         <tbody>         
-        <tr>
-                    <td align='center' className = 'td'>Accesos a modulo de ventas</td>
-                    <td align='center' className = 'td'><input type="checkbox" name="accesosModuloVentaAdmin" id="accesosModuloVentaAdmin" /></td>
-                    <td align='center' className = 'td'><input type="checkbox" name="accesosModuloVentaVend" id="accesosModuloVentaVend" /></td>                
+                <tr>
+                    <td>Accesos a modulo de ventas</td>
+                    <td><input type="checkbox" name="accesosModuloVentaAdmin" id="accesosModuloVentaAdmin" /></td>
+                    <td><input type="checkbox" name="accesosModuloVentaVend" id="accesosModuloVentaVend" /></td>                
                 </tr>
                 <tr>
-                    <td align='center' className = 'td'>Registrar venta</td>
-                    <td align='center' className = 'td'><input type="checkbox" name="registrarVentaAdmin" id="registrarVentaAdmin" /></td>
-                    <td align='center' className = 'td'><input type="checkbox" name="registrarVentaVend" id="registrarVentaVend" /></td>
+                    <td>Registrar venta</td>
+                    <td><input type="checkbox" name="registrarVentaAdmin" id="registrarVentaAdmin" /></td>
+                    <td><input type="checkbox" name="registrarVentaVend" id="registrarVentaVend" /></td>
                 </tr>
                 <tr>
-                    <td align='center' className = 'td'>Actualizar venta</td>
-                    <td align='center' className = 'td'><input type="checkbox" name="actualizarVentaAdmin" id="actualizarVentaAdmin" /></td>
-                    <td align='center' className = 'td'><input type="checkbox" name="actualizarVentaVend" id="actualizarVentaVend" /></td>
+                    <td>Actualizar venta</td>
+                    <td><input type="checkbox" name="actualizarVentaAdmin" id="actualizarVentaAdmin" /></td>
+                    <td><input type="checkbox" name="actualizarVentaVend" id="actualizarVentaVend" /></td>
                 </tr>                
                 <tr>
-                    <td align='center' className = 'td'>Accesos a modulo de productos</td>
-                    <td align='center' className = 'td'><input type="checkbox" name="accesosModuloProductosAdmin" id="accesosModuloProductosAdmin" /></td>
-                    <td align='center' className = 'td'><input type="checkbox" name="accesosModuloProductosVend" id="accesosModuloProductosVend" /></td>                
+                    <td>Accesos a modulo de productos</td>
+                    <td><input type="checkbox" name="accesosModuloProductosAdmin" id="accesosModuloProductosAdmin" /></td>
+                    <td><input type="checkbox" name="accesosModuloProductosVend" id="accesosModuloProductosVend" /></td>                
                 </tr>
                 <tr>
-                    <td align='center' className = 'td'>Registrar Productos</td>
-                    <td align='center' className = 'td'><input type="checkbox" name="registrarProductosAdmin" id="registrarProductosAdmin" /></td>
-                    <td align='center' className = 'td'><input type="checkbox" name="registrarProductosVend" id="registrarProductosVend" /></td>
+                    <td>Registrar Productos</td>
+                    <td><input type="checkbox" name="registrarProductosAdmin" id="registrarProductosAdmin" /></td>
+                    <td><input type="checkbox" name="registrarProductosVend" id="registrarProductosVend" /></td>
                 </tr>
                 <tr>
-                    <td align='center' className = 'td'>Actualizar Productos</td>
-                    <td align='center' className = 'td'><input type="checkbox" name="actualizarProductosAdmin" id="actualizarProductosAdmin" /></td>
-                    <td align='center' className = 'td'><input type="checkbox" name="actualizarProductosVend" id="actualizarProductosVend" /></td>
+                    <td>Actualizar Productos</td>
+                    <td><input type="checkbox" name="actualizarProductosAdmin" id="actualizarProductosAdmin" /></td>
+                    <td><input type="checkbox" name="actualizarProductosVend" id="actualizarProductosVend" /></td>
                 </tr>
                 <tr>
-                    <td align='center' className = 'td'>Accesos a modulo de usuarios</td>
-                    <td align='center' className = 'td'><input type="checkbox" name="accesosModuloUsuariosAdmin" id="accesosModuloUsuariosAdmin" /></td>
-                    <td align='center' className = 'td'><input type="checkbox" name="accesosModuloUsuariosVend" id="accesosModuloUsuariosVend" /></td>                
+                    <td>Accesos a modulo de usuarios</td>
+                    <td><input type="checkbox" name="accesosModuloUsuariosAdmin" id="accesosModuloUsuariosAdmin" /></td>
+                    <td><input type="checkbox" name="accesosModuloUsuariosVend" id="accesosModuloUsuariosVend" /></td>                
                 </tr>                
                 <tr>
-                    <td align='center' className = 'td'>Actualizar Usuarios</td>
-                    <td align='center' className = 'td'><input type="checkbox" name="actualizarUsuariosAdmin" id="actualizarUsuariosAdmin" /></td>
-                    <td align='center' className = 'td'><input type="checkbox" name="actualizarUsuariosVend" id="actualizarUsuariosVend" /></td>
+                    <td>Actualizar Usuarios</td>
+                    <td><input type="checkbox" name="actualizarUsuariosAdmin" id="actualizarUsuariosAdmin" /></td>
+                    <td><input type="checkbox" name="actualizarUsuariosVend" id="actualizarUsuariosVend" /></td>
                 </tr>
                 <tr>
-                    <td align='center' className = 'td'>Modificar permisos</td>
-                    <td align='center' className = 'td'><input type="checkbox" name="modificarpermisosAdmin" id="modificarpermisosAdmin" /></td>
-                    <td align='center' className = 'td'><input type="checkbox" name="modificarpermisosVend" id="modificarpermisosVend" /></td>
+                    <td>Modificar permisos</td>
+                    <td><input type="checkbox" name="modificarpermisosAdmin" id="modificarpermisosAdmin" /></td>
+                    <td><input type="checkbox" name="modificarpermisosVend" id="modificarpermisosVend" /></td>
                 </tr>                          
         </tbody>
       </table>
