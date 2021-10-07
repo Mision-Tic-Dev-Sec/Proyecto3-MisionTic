@@ -1,46 +1,40 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
+import { nanoid } from 'nanoid';
+import { Dialog, Tooltip } from '@material-ui/core';
+import { obtenerUsuarios } from 'utils/api';
 import 'react-toastify/dist/ReactToastify.css';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
 // que diga si el usuario es mayor de edad o no
 
-const usuariosBackend = [
-  {
-    idUsuario: '001',
-    nombreUsuario: 'Raul Gonzales',
-    correo: 'raul@gmail.com',
-    rol: 'administrador',
-    estado: 'autorizado',
-    fechaIngreso: '12/01/2021 18:00'
-  },
-  {
-    idUsuario: '002',
-    nombreUsuario: 'Manuel Moncada',
-    correo: 'manuel@gmail.com',
-    rol: 'vendedor',
-    estado: 'pendiente',
-    fechaIngreso: '24/02/2021 14:00'
-  },
-  {
-    idUsuario: '001',
-    nombreUsuario: 'Juana Perez',
-    correo: 'Juana@gmail.com',
-    rol: 'vendedor',
-    estado: 'no autorizado',
-    fechaIngreso: '24/05/2020 08:00'
-  }, 
-];
+
 
 const Usuarios = () => {
   const [mostrarTabla, setMostrarTabla] = useState(true);
   const [usuarios, setUsuarios] = useState([]);
   const [textoBoton, setTextoBoton] = useState('Crear Nuevo Usuario');
   const [colorBoton, setColorBoton] = useState('indigo');
+  const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
+
+  // useEffect(() => {
+  //   //obtener lista de vehículos desde el backend
+  //   setUsuarios(usuariosBackend);
+  // }, []);
+
+  useEffect(() => {
+    console.log('consulta', ejecutarConsulta);
+    if (ejecutarConsulta) {
+      obtenerUsuarios(setUsuarios, setEjecutarConsulta);
+    }
+  }, [ejecutarConsulta]);
 
   useEffect(() => {
     //obtener lista de vehículos desde el backend
-    setUsuarios(usuariosBackend);
-  }, []);
+    if (mostrarTabla) {
+      setEjecutarConsulta(true);
+    }
+  }, [mostrarTabla]);
 
   useEffect(() => {
     if (mostrarTabla) {
@@ -67,10 +61,12 @@ const Usuarios = () => {
         </button>
       </div>
       {mostrarTabla ? (
-        <TablaUsuarios listaUsuarios={usuarios} />
+        <TablaUsuarios listaUsuarios={usuarios} setEjecutarConsulta={setEjecutarConsulta}/>
       ) : (
         <ModificarPermisos
           setMostrarTabla={setMostrarTabla}
+          // listaVehiculos={usuarios}
+          // setVehiculos={setUsuarios}
         />
       )}
       <ToastContainer position='bottom-center' autoClose={2000} />
@@ -78,24 +74,32 @@ const Usuarios = () => {
   );
 };
 
-const TablaUsuarios = ({ listaUsuarios }) => {
+const TablaUsuarios = ({ listaUsuarios, setEjecutarConsulta }) => {
+  const [busqueda, setBusqueda] = useState('');
+  const [usuariosFiltrados, setUsuariosFiltrados] = useState(listaUsuarios);
+
   useEffect(() => {
-    console.log('este es el listado de Usuarios en el componente de tabla', listaUsuarios);
-  }, [listaUsuarios]);
+    setUsuariosFiltrados(
+      listaUsuarios.filter((elemento) => {
+        return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
+      })
+    );
+  }, [busqueda, listaUsuarios]);
+
+ 
+
   return (
     <div className='flex flex-col items-center justify-center'>
       <h2 className='text-2xl font-extrabold text-gray-800'>Todos los Usuarios</h2>
       <div className="w-96 bg-white border border-gray-300 rounded-xl flex m-3 self-start py-2">
-        <select required defaultValue={0} name="filtroUsuarios" className="focus-within:outline-none rounde-l px-2">
-          <option disabled value={0}>Elija el filtro</option>
-          <option>Id Usuario</option>
-          <option>Descripción</option>
-          <option>Precio</option>
-        </select>
-        <input type="text" name="busquedaUsuarios" placeholder="Busqueda" className="focus-within:outline-none m-0 w-72"/>
-        <button className="pr-2 transform hover:scale-125"><i class="fas fa-search"></i></button>
+        <input 
+        value={busqueda} 
+        onChange={(e) => setBusqueda(e.target.value)} 
+        placeholder="Busqueda" 
+        className="focus-within:outline-none m-0 w-72"/>
+        <div className="pr-2 transform hover:scale-125"><i class="fas fa-search"></i></div>
       </div>
-      <table className = 'border border-gray-200'>
+      <table className = 'border border-gray-200 tabla'>
         <thead className = 'border border-gray-200'>
           <tr>
             <th align="center" className = 'p-2'>Id del Usuario</th>
@@ -108,53 +112,182 @@ const TablaUsuarios = ({ listaUsuarios }) => {
           </tr>
         </thead>
         <tbody>
-          {listaUsuarios.map((usuario) => {
+          {usuariosFiltrados.map((usuario) => {
             return (
-              <tr>
-                <td align="center" className = 'p-2'>{usuario.idUsuario}</td>
-                <td align="center" className = 'p-2'>{usuario.nombreUsuario}</td>
-                <td align="center" className = 'p-2'>{usuario.correo}</td>
-                <td align="center" className = 'p-2'>                  
-                      <select
-                        className='bg-white border border-gray-600 p-2 rounded-lg m-2 focus-within:outline-none border-none'
-                        name='rol'
-                        required
-                        defaultValue={0}
-                      >
-                        <option disabled value={0}>
-                          {usuario.rol}
-                        </option>
-                        <option>Administrador</option>
-                        <option>Vendedor</option>
-                      </select>                  
-                </td>
-                <td align="center" className = 'p-2'>
-                  
-                      <select
-                        className='bg-white border border-gray-600 p-2 rounded-lg m-2 focus-within:outline-none border-none'
-                        name='estado'
-                        required
-                        defaultValue={0}
-                      >
-                        <option disabled value={0}>
-                          {usuario.estado}
-                        </option>
-                        <option>Autorizado</option>
-                        <option>No autorizado</option>
-                        <option>Pendiente</option>
-                      </select>
-                  
-                </td>
-                <td align="center" className = 'p-2'>{usuario.fechaIngreso}</td>
-                <td align="center" className = 'p-2'>
-                  <button className="bg-gray-300 p-1 hover:bg-gray-500 rounded-lg"
-                    onClick={()=>{toast.success('Registro exitoso')}}>Actualizar</button></td>
-              </tr>
+              <FilaUsuarios
+                key={nanoid()}
+                usuario={usuario}
+                setEjecutarConsulta={setEjecutarConsulta}
+                />
             );
           })}
         </tbody>
       </table>
     </div>
+  );
+};
+
+const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
+  const [edit, setEdit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [infoNuevoUsuario, setInfoNuevoUsuario] = useState({
+    id: usuario.idusuario,
+    name: usuario.nombreUsuario,
+    mail: usuario.correo,
+    rol: usuario.rol,
+    state: usuario.estado,
+    date: usuario.fechaIngreso
+  });
+
+  const actualizarUsuario = async () => {
+    //enviar la info al backend
+    const options = {
+      method: 'PATCH',
+      url: 'http://localhost:5000/usuarios/editar/',
+      headers: { 'Content-Type': 'application/json' },
+      data: { ...infoNuevoUsuario, id: usuario._id },
+    };
+
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        toast.success('Usuario modificado con éxito');
+        setEdit(false);
+        setEjecutarConsulta(true);
+      })
+      .catch(function (error) {
+        toast.error('Error modificando el usuario');
+        console.error(error);
+      });
+  };
+
+  const eliminarUsuario = async () => {
+    const options = {
+      method: 'DELETE',
+      url: 'http://localhost:5000/usuarios/eliminar/',
+      headers: { 'Content-Type': 'application/json' },
+      data: { id: usuario._id },
+    };
+
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        toast.success('Usuario eliminado con éxito');
+        setEjecutarConsulta(true);
+      })
+      .catch(function (error) {
+        console.error(error);
+        toast.error('Usuario eliminando el vehículo');
+      });
+    setOpenDialog(false);
+  };
+
+  return (
+    <tr>
+      {edit ? (
+        <>
+          <td>
+            <select
+              className='bg-white border border-gray-600 p-2 rounded-lg m-2 focus-within:outline-none border-none'
+              defaultValue={0}
+              value={infoNuevoUsuario.rol}
+              onChange={(e) =>
+                setInfoNuevoUsuario({ ...infoNuevoUsuario, rol: e.target.value })
+              }
+            >
+              <option disabled value={0}>
+                Elija una opción
+              </option>
+              <option>Administrador</option>
+              <option>Vendedor</option>
+            </select>
+          </td>
+          <td>            
+            <select
+              className='bg-white border border-gray-600 p-2 rounded-lg m-2 focus-within:outline-none border-none'
+              value={infoNuevoUsuario.state}
+              defaultValue={0}
+              onChange={(e) => setInfoNuevoUsuario({ ...infoNuevoUsuario, state: e.target.value })}
+            >
+              <option disabled value={0}>
+                Elija una opción
+              </option>
+              <option>Autorizado</option>
+              <option>No autorizado</option>
+              <option>Pendiente</option>
+            </select>
+          </td>         
+          
+        </>
+      ) : (
+        <>
+          <td>{usuario.id}</td>
+          <td>{usuario.name}</td>
+          <td>{usuario.mail}</td>
+          <td>{usuario.state}</td>
+          <td>{usuario.rol}</td>
+          <td>{usuario.date}</td>
+        </>
+      )}
+      <td>
+        <div className='flex w-full justify-around'>
+          {edit ? (
+            <>
+              <Tooltip title='Confirmar Edición' arrow>
+                <i
+                  onClick={() => actualizarUsuario()}
+                  className='fas fa-check text-green-700 hover:text-green-500'
+                />
+              </Tooltip>
+              <Tooltip title='Cancelar edición' arrow>
+                <i
+                  onClick={() => setEdit(!edit)}
+                  className='fas fa-ban text-yellow-700 hover:text-yellow-500'
+                />
+              </Tooltip>
+            </>
+          ) : (
+            <>
+              <Tooltip title='Editar Vehículo' arrow>
+                <i
+                  onClick={() => setEdit(!edit)}
+                  className='fas fa-pencil-alt text-yellow-700 hover:text-yellow-500'
+                />
+              </Tooltip>
+              <Tooltip title='Eliminar usuario' arrow>
+                <i
+                  onClick={() => setOpenDialog(true)}
+                  className='fas fa-trash text-red-700 hover:text-red-500'
+                />
+              </Tooltip>
+            </>
+          )}
+        </div>
+        <Dialog open={openDialog}>
+          <div className='p-8 flex flex-col'>
+            <h1 className='text-gray-900 text-2xl font-bold'>
+              ¿Está seguro de querer eliminar el usuario?
+            </h1>
+            <div className='flex w-full items-center justify-center my-4'>
+              <button
+                onClick={() => eliminarUsuario()}
+                className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'
+              >
+                Sí
+              </button>
+              <button
+                onClick={() => setOpenDialog(false)}
+                className='mx-2 px-4 py-2 bg-red-500 text-white hover:bg-red-700 rounded-md shadow-md'
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </Dialog>
+      </td>
+    </tr>
   );
 };
 
