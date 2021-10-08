@@ -81,14 +81,16 @@ const TablaProductos = ({ listaProductos, setEjecutarConsulta }) => {
   }, [busqueda, listaProductos]);
 
   return (
-    <div className='flex flex-col items-center justify-center w-full'>
-      <input
-        value={busqueda}
-        onChange={(e) => setBusqueda(e.target.value)}
-        placeholder='Buscar'
-        className='border-2 border-gray-700 px-3 py-1 self-start rounded-md focus:outline-none focus:border-indigo-500'
-      />
+    <div className='flex flex-col items-center justify-center w-4/5'>      
       <h2 className='text-2xl font-extrabold text-gray-800'>Todos los productos</h2>
+      <div className="w-96 bg-white border border-gray-300 rounded-xl flex m-3 self-start py-2 justify-between">
+        <input 
+        value={busqueda} 
+        onChange={(e) => setBusqueda(e.target.value)} 
+        placeholder="Busqueda" 
+        className="focus-within:outline-none m-0 w-72 pl-2"/>
+        <div className="pr-2"><i class="fas fa-search"></i></div>
+      </div>
       <div className='hidden md:flex w-full'>
         <table className='tabla'>
           <thead>

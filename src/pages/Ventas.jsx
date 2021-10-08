@@ -83,30 +83,28 @@ const TablaVentas = ({ listaVentas, setEjecutarConsulta }) => {
   return (
     <div className='flex flex-col items-center justify-center'>
       <h2 className='text-2xl font-extrabold text-gray-800'>Todos las Ventas</h2>
-      <div className="w-96 bg-white border border-gray-300 rounded-xl flex m-3 self-start py-2">
-        <select required defaultValue={0} name="filtroVentas" className="focus-within:outline-none rounde-l px-2">
-          <option disabled value={0}>Elija el filtro</option>
-          <option>Id Venta</option>
-          <option>Descripción</option>
-          <option>Precio</option>
-        </select>
-        <input type="text" name="busquedaVentas" placeholder="Busqueda" className="focus-within:outline-none m-0 w-72"/>
-        <button className="pr-2 transform hover:scale-125"><i class="fas fa-search"></i></button>
+      <div className="w-96 bg-white border border-gray-300 rounded-xl flex m-3 self-start py-2 justify-between">
+        <input 
+        value={busqueda} 
+        onChange={(e) => setBusqueda(e.target.value)} 
+        placeholder="Busqueda" 
+        className="focus-within:outline-none m-0 w-72 pl-2"/>
+        <div className="pr-2"><i class="fas fa-search"></i></div>
       </div>
-      <table className = 'border border-gray-200'>
-        <thead className = 'border border-gray-200'>
+      <table className = 'tabla'>
+        <thead>
           <tr>
-            <th align="center" className = 'p-2'>Id Ventas</th>
-            <th align="center" className = 'p-2'>Valor Venta</th>
-            <th align="center" className = 'p-2'>Id producto</th>
-            <th align="center" className = 'p-2'>cantidad</th>
-            <th align="center" className = 'p-2'>Precio unitario</th>
-            <th align="center" className = 'p-2'>Fecha venta</th>
-            <th align="center" className = 'p-2'>Identificacion cliente</th>
-            <th align="center" className = 'p-2'>Nombre cliente</th>
-            <th align="center" className = 'p-2'>Vendedor</th>
-            <th align="center" className = 'p-2'>Estado</th>
-            <th align="center" className = 'p-2'>Acciones</th>
+            <th>Id Ventas</th>
+            <th>Valor Venta</th>
+            <th>Id producto</th>
+            <th>cantidad</th>
+            <th>Precio unitario</th>
+            <th>Fecha venta</th>
+            <th>Identificacion cliente</th>
+            <th>Nombre cliente</th>
+            <th>Vendedor</th>
+            <th>Estado</th>
+            <th>Acciones</th>
 
           </tr>
         </thead>
