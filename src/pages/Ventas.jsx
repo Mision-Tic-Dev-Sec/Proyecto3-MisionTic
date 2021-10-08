@@ -1,48 +1,33 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { obtenerVentas } from 'utils/api';
+import axios from 'axios';
+import { nanoid } from 'nanoid';
+import { Dialog, Tooltip } from '@material-ui/core';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
 // que diga si el usuario es mayor de edad o no
-
-
-
-const ventasBackend = [
-  {
-    idVenta: '001',
-    valorVenta: 10000,
-    idProducto: '001',
-    cantidad: 2,
-    precioUnitario: 2300,
-    fechaVenta: '02/09/2021 12:00',
-    identificacion: 12099384,
-    nombreCliente: 'Juan Valdez',
-    vendedor: 'Jhon Valencia',
-    estado: 'En proceso'
-  },
-  {
-    idVenta: '002',
-    valorVenta: 100000,
-    idProducto: '003',
-    cantidad: 2,
-    precioUnitario: 2500,
-    fechaVenta: '02/09/2021 06:00',
-    identificacion: 12339384,
-    nombreCliente: 'Raul Valdez',
-    vendedor: 'Victor Valencia',
-    estado: 'Cancelado'
-  }
-];
 
 const Ventas = () => {
   const [mostrarTabla, setMostrarTabla] = useState(true);
   const [ventas, setVentas] = useState([]);
   const [textoBoton, setTextoBoton] = useState('Crear Nueva venta');
   const [colorBoton, setColorBoton] = useState('indigo');
+  const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
+
+  useEffect(()=>{
+    console.log('consulta',ejecutarConsulta);
+    if (ejecutarConsulta){
+      obtenerVentas(setVentas,setEjecutarConsulta)
+    }
+  }, [ejecutarConsulta]);
 
   useEffect(() => {
-    //obtener lista de ventas desde el backend
-    setVentas(ventasBackend);
-  }, []);
+    //obtener lista de vehículos desde el backend
+    if (mostrarTabla){
+      setEjecutarConsulta(true);
+    }
+  }, [mostrarTabla]);
 
   useEffect(() => {
     if (mostrarTabla) {
@@ -53,6 +38,7 @@ const Ventas = () => {
       setColorBoton('blue');
     }
   }, [mostrarTabla]);
+  
   return (
     <div className='flex h-full w-full flex-col items-center justify-start p-8'>
       <div className='flex flex-col'>
@@ -69,7 +55,7 @@ const Ventas = () => {
         </button>
       </div>
       {mostrarTabla ? (
-        <TablaVentas listaVentas={ventas} />
+        <TablaVentas listaVentas={ventas} setEjecutarConsulta={setEjecutarConsulta} />
       ) : (
         <FormularioCreacionVentas
           setMostrarTabla={setMostrarTabla}
@@ -82,10 +68,18 @@ const Ventas = () => {
   );
 };
 
-const TablaVentas = ({ listaVentas }) => {
+const TablaVentas = ({ listaVentas, setEjecutarConsulta }) => {
+  const [busqueda, setBusqueda] = useState('');
+  const [ventasFiltradas, setVentasFiltradas] = useState(listaVentas);
+
   useEffect(() => {
-    console.log('este es el listado de Ventas en el componente de tabla', listaVentas);
-  }, [listaVentas]);
+    setVentasFiltradas(
+      listaVentas.filter((elemento) => {
+        return JSON.stringify(elemento).toLowerCase().includes(busqueda.toLowerCase());
+      })
+    );
+  }, [busqueda, listaVentas]);
+
   return (
     <div className='flex flex-col items-center justify-center'>
       <h2 className='text-2xl font-extrabold text-gray-800'>Todos las Ventas</h2>
@@ -117,21 +111,13 @@ const TablaVentas = ({ listaVentas }) => {
           </tr>
         </thead>
         <tbody>
-          {listaVentas.map((Venta) => {
+          {ventasFiltradas.map((venta) => {
             return (
-              <tr>
-                <td align="center" className = 'p-2'>{Venta.idVenta}</td>
-                <td align="center" className = 'p-2'>{Venta.valorVenta}</td>
-                <td align="center" className = 'p-2'>{Venta.idProducto}</td>
-                <td align="center" className = 'p-2'>{Venta.cantidad}</td>
-                <td align="center" className = 'p-2'>{Venta.precioUnitario}</td>
-                <td align="center" className = 'p-2'>{Venta.fechaVenta}</td>
-                <td align="center" className = 'p-2'>{Venta.identificacion}</td>
-                <td align="center" className = 'p-2'>{Venta.nombreCliente}</td>
-                <td align="center" className = 'p-2'>{Venta.vendedor}</td>
-                <td align="center" className = 'p-2'>{Venta.estado}</td>
-                <td align="center" className = 'p-2'><button className="bg-gray-300 p-1 hover:bg-gray-500 rounded-lg">Actualizar</button></td>
-              </tr>
+                <FilaVentas
+                  key={nanoid()}
+                  venta={venta}
+                  setEjecutarConsulta={setEjecutarConsulta}
+                />
             );
           })}
         </tbody>
@@ -140,10 +126,242 @@ const TablaVentas = ({ listaVentas }) => {
   );
 };
 
+const FilaVentas = ({ venta, setEjecutarConsulta }) => {
+  const [edit, setEdit] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [infoNuevaVenta, setInfoNuevaVenta] = useState({
+    idVenta: venta.idVenta,
+    valorVenta: venta.valorVenta,
+    idProductos: venta.idProductos,
+    cantidad: venta.cantidad,
+    precioUnitario: venta.precioUnitario,
+    fechaVenta: venta.fechaVenta,
+    idCliente: venta.idCliente,
+    nombreCliente: venta.nombreCliente,
+    vendedor: venta.vendedor,
+    estado: venta.estado
+  });
+
+  const actualizarVenta = async () => {
+    //enviar la info al backend
+    const options = {
+      method: 'PATCH',
+      url: 'http://localhost:5000/ventas/editar/',
+      headers: { 'Content-Type': 'application/json' },
+      data: { ...infoNuevaVenta, idVenta: venta._id },
+    };
+
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        toast.success('Venta modificada con éxito');
+        setEdit(false);
+        setEjecutarConsulta(true);
+      })
+      .catch(function (error) {
+        toast.error('Error modificando la venta');
+        console.error(error);
+      });
+  };
+
+  const eliminarVenta = async () => {
+    const options = {
+      method: 'DELETE',
+      url: 'http://localhost:5000/ventas/eliminar/',
+      headers: { 'Content-Type': 'application/json' },
+      data: { id: venta._id },
+    };
+
+    await axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        toast.success('Venta eliminada con éxito');
+        setEjecutarConsulta(true);
+      })
+      .catch(function (error) {
+        console.error(error);
+        toast.error('Error eliminando la venta');
+      });
+    setOpenDialog(false);
+  };
+
+  return (
+    <tr>
+      {edit ? (
+        <>
+          <td>
+            {venta.idVenta}
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevaVenta.valorVenta}
+              onChange={(e) => setInfoNuevaVenta({ ...infoNuevaVenta, valorVenta: e.target.value })}
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevaVenta.idProductos}
+              onChange={(e) =>
+                setInfoNuevaVenta({ ...infoNuevaVenta, idProductos: e.target.value })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevaVenta.cantidad}
+              onChange={(e) =>
+                setInfoNuevaVenta({ ...infoNuevaVenta, cantidad: e.target.value })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevaVenta.precioUnitario}
+              onChange={(e) =>
+                setInfoNuevaVenta({ ...infoNuevaVenta, precioUnitario: e.target.value })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevaVenta.fechaVenta}
+              onChange={(e) =>
+                setInfoNuevaVenta({ ...infoNuevaVenta, fechaVenta: e.target.value })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevaVenta.idCliente}
+              onChange={(e) =>
+                setInfoNuevaVenta({ ...infoNuevaVenta, idCliente: e.target.value })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevaVenta.nombreCliente}
+              onChange={(e) =>
+                setInfoNuevaVenta({ ...infoNuevaVenta, nombreCliente: e.target.value })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevaVenta.vendedor}
+              onChange={(e) =>
+                setInfoNuevaVenta({ ...infoNuevaVenta, vendedor: e.target.value })
+              }
+            />
+          </td>
+          <td>
+            <input
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              type='text'
+              value={infoNuevaVenta.estado}
+              onChange={(e) =>
+                setInfoNuevaVenta({ ...infoNuevaVenta, estado: e.target.value })
+              }
+            />
+          </td>
+        </>
+      ) : (
+        <>
+          <td>{venta.idVenta}</td>
+          <td>{venta.valorVenta}</td>
+          <td>{venta.idProductos}</td>
+          <td>{venta.cantidad}</td>
+          <td>{venta.precioUnitario}</td>
+          <td>{venta.fechaVenta}</td>
+          <td>{venta.idCliente}</td>
+          <td>{venta.nombreCliente}</td>
+          <td>{venta.vendedor}</td>
+          <td>{venta.estado}</td>
+        </>
+      )}
+      <td>
+        <div className='flex w-full justify-around'>
+          {edit ? (
+            <>
+              <Tooltip title='Confirmar Edición' arrow>
+                <i
+                  onClick={() => actualizarVenta()}
+                  className='fas fa-check text-green-700 hover:text-green-500'
+                />
+              </Tooltip>
+              <Tooltip title='Cancelar edición' arrow>
+                <i
+                  onClick={() => setEdit(!edit)}
+                  className='fas fa-ban text-yellow-700 hover:text-yellow-500'
+                />
+              </Tooltip>
+            </>
+          ) : (
+            <>
+              <Tooltip title='Editar venta' arrow>
+                <i
+                  onClick={() => setEdit(!edit)}
+                  className='fas fa-pencil-alt text-yellow-700 hover:text-yellow-500'
+                />
+              </Tooltip>
+              <Tooltip title='Eliminar venta' arrow>
+                <i
+                  onClick={() => setOpenDialog(true)}
+                  className='fas fa-trash text-red-700 hover:text-red-500'
+                />
+              </Tooltip>
+            </>
+          )}
+        </div>
+        <Dialog open={openDialog}>
+          <div className='p-8 flex flex-col'>
+            <h1 className='text-gray-900 text-2xl font-bold'>
+              ¿Está seguro de querer eliminar la venta?
+            </h1>
+            <div className='flex w-full items-center justify-center my-4'>
+              <button
+                onClick={() => eliminarVenta()}
+                className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'
+              >
+                Sí
+              </button>
+              <button
+                onClick={() => setOpenDialog(false)}
+                className='mx-2 px-4 py-2 bg-red-500 text-white hover:bg-red-700 rounded-md shadow-md'
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </Dialog>
+      </td>
+    </tr>
+  );
+};
+
+
 const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) => {
   const form = useRef(null);
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     const fd = new FormData(form.current);
     
@@ -152,12 +370,35 @@ const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) =
       nuevaVenta[key] = value;
     });
 
-    setMostrarTabla(true);
-    setVentas([...listaVentas, nuevaVenta]);
-    // identificar el caso de éxito y mostrar un toast de éxito
-    toast.success('Venta agregada con éxito');
-    // identificar el caso de error y mostrar un toast de error
-    // toast.error('Error creando un vehículo');
+    const options = {
+      method: 'POST',
+      url: 'http://localhost:5000/ventas/nuevo/',
+      headers: { 'Content-Type': 'application/json' },
+      data: { 
+        idVenta: nuevaVenta.idVenta,
+        valorVenta: nuevaVenta.valorVenta,
+        idProductos: nuevaVenta.idProductos,
+        cantidad: nuevaVenta.cantidad,
+        precioUnitario: nuevaVenta.precioUnitario,
+        fechaVenta: nuevaVenta.fechaVenta,
+        idCliente: nuevaVenta.idCliente,
+        nombreCliente: nuevaVenta.nombreCliente,
+        vendedor: nuevaVenta.vendedor,
+        estado: nuevaVenta.estado
+      },
+    };
+
+    await axios
+    .request(options)
+    .then(function (response) {
+      console.log(response.data);
+      toast.success('Vehículo agregado con éxito');
+    })
+    .catch(function (error) {
+      console.error(error);
+      toast.error('Error creando un vehículo');
+    });
+
   };
 
   return (

@@ -116,6 +116,7 @@ const TablaVehiculos = ({ listaVehiculos, setEjecutarConsulta }) => {
               <span>{el.name}</span>
               <span>{el.brand}</span>
               <span>{el.model}</span>
+              <span>{el.model}</span>
             </div>
           );
         })}
