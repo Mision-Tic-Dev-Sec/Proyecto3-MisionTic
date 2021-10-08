@@ -187,12 +187,7 @@ const FilaProducto = ({ producto, setEjecutarConsulta }) => {
       {edit ? (
         <>
           <td>
-            <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
-              type='text'
-              value={infoNuevoProducto.idProducto}
-              onChange={(e) => setInfoNuevoProducto({ ...infoNuevoProducto, idProducto: e.target.value })}
-            />
+            {producto.idProducto}
           </td>
           <td>
             <input
