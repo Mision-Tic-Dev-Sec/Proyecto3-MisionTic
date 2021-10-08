@@ -144,9 +144,9 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
     //enviar la info al backend
     const options = {
       method: 'PATCH',
-      url: 'http://localhost:5000/ventas/editar/',
+      url: `http://localhost:5000/ventas/${venta._id}/`,
       headers: { 'Content-Type': 'application/json' },
-      data: { ...infoNuevaVenta, idVenta: venta._id },
+      data: { ...infoNuevaVenta },
     };
 
     await axios
@@ -166,7 +166,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
   const eliminarVenta = async () => {
     const options = {
       method: 'DELETE',
-      url: 'http://localhost:5000/ventas/eliminar/',
+      url: `http://localhost:5000/ventas/${venta._id}/`,
       headers: { 'Content-Type': 'application/json' },
       data: { id: venta._id },
     };
@@ -370,7 +370,7 @@ const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) =
 
     const options = {
       method: 'POST',
-      url: 'http://localhost:5000/ventas/nuevo/',
+      url: 'http://localhost:5000/ventas/',
       headers: { 'Content-Type': 'application/json' },
       data: { 
         idVenta: nuevaVenta.idVenta,

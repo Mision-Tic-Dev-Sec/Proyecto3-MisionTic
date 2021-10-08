@@ -141,9 +141,9 @@ const FilaProducto = ({ producto, setEjecutarConsulta }) => {
     //enviar la info al backend
     const options = {
       method: 'PATCH',
-      url: 'http://localhost:5000/productos/editar/',
+      url: `http://localhost:5000/productos/${producto._id}/`,
       headers: { 'Content-Type': 'application/json' },
-      data: { ...infoNuevoProducto, id: producto._id },
+      data: { ...infoNuevoProducto },
     };
 
     await axios
@@ -163,7 +163,7 @@ const FilaProducto = ({ producto, setEjecutarConsulta }) => {
   const eliminarProducto = async () => {
     const options = {
       method: 'DELETE',
-      url: 'http://localhost:5000/productos/eliminar/',
+      url: `http://localhost:5000/productos/${producto._id}/`,
       headers: { 'Content-Type': 'application/json' },
       data: { id: producto._id },
     };
@@ -296,7 +296,7 @@ const FormularioCreacionProductos = ({ setMostrarTabla, listaProductos, setProdu
 
     const options = {
       method: 'POST',
-      url: 'http://localhost:5000/productos/nuevo/',
+      url: 'http://localhost:5000/productos/',
       headers: { 'Content-Type': 'application/json' },
       data: { idProducto: nuevoProducto.idProducto, nombreProducto: nuevoProducto.nombreProducto, precio: nuevoProducto.precio },
     };

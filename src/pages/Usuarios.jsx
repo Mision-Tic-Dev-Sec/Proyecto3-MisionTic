@@ -143,9 +143,9 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
     //enviar la info al backend
     const options = {
       method: 'PATCH',
-      url: 'http://localhost:5000/usuarios/editar/',
+      url: `http://localhost:5000/usuarios/${usuario._id}/`,
       headers: { 'Content-Type': 'application/json' },
-      data: { ...infoNuevoUsuario, id: usuario._id },
+      data: { ...infoNuevoUsuario},
     };
 
     await axios
@@ -165,7 +165,7 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
   const eliminarUsuario = async () => {
     const options = {
       method: 'DELETE',
-      url: 'http://localhost:5000/usuarios/eliminar/',
+      url: `http://localhost:5000/usuarios/${usuario._id}/`,
       headers: { 'Content-Type': 'application/json' },
       data: { id: usuario._id },
     };
