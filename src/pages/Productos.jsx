@@ -3,7 +3,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { nanoid } from 'nanoid';
 import { Dialog, Tooltip } from '@material-ui/core';
-import 'react-toastify/dist/ReactToastify.css';
 import { obtenerProductos } from 'utils/api';
 import 'react-toastify/dist/ReactToastify.css';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
