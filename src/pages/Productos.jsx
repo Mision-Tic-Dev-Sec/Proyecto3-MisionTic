@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
 import { nanoid } from 'nanoid';
 import { Dialog, Tooltip } from '@material-ui/core';
-import { obtenerProductos } from 'utils/api';
+import { obtenerProductos, crearProductos, editarProducto, eliminarProducto } from 'utils/api';
 import 'react-toastify/dist/ReactToastify.css';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
 // que diga si el usuario es mayor de edad o no
@@ -15,10 +14,19 @@ const Productos = () => {
   const [colorBoton, setColorBoton] = useState('indigo');
   const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
 
-  useEffect(()=>{
-    console.log('consulta',ejecutarConsulta);
-    if (ejecutarConsulta){
-      obtenerProductos(setProductos,setEjecutarConsulta)
+  useEffect(() => {
+    console.log('consulta', ejecutarConsulta);
+    if (ejecutarConsulta) {
+      obtenerProductos(
+        (response) => {
+          console.log('la respuesta que se recibio fue', response);
+          setProductos(response.data);
+        },
+        (error) => {
+          console.error('Salio un error:', error);
+        }
+      );
+      setEjecutarConsulta(false);
     }
   }, [ejecutarConsulta]);
 
@@ -136,48 +144,44 @@ const FilaProducto = ({ producto, setEjecutarConsulta }) => {
     nombreProducto: producto.nombreProducto,
     precio: producto.precio,
   });
+
   const actualizarProducto = async () => {
     //enviar la info al backend
-    const options = {
-      method: 'PATCH',
-      url: `http://localhost:5000/productos/${producto._id}/`,
-      headers: { 'Content-Type': 'application/json' },
-      data: { ...infoNuevoProducto },
-    };
-
-    await axios
-      .request(options)
-      .then(function (response) {
+    
+    await editarProducto(
+      producto._id,
+      {
+        idProducto: infoNuevoProducto.idProducto,
+        nombreProducto: infoNuevoProducto.nombreProducto,
+        precio: infoNuevoProducto.precio,
+      },
+      (response) => {
         console.log(response.data);
         toast.success('Producto modificado con éxito');
         setEdit(false);
         setEjecutarConsulta(true);
-      })
-      .catch(function (error) {
-        toast.error('Error modificando el producto');
+      },
+      (error) => {
+        toast.error('Error modificando el vehículo');
         console.error(error);
-      });
+      }
+    );
   };
 
-  const eliminarProducto = async () => {
-    const options = {
-      method: 'DELETE',
-      url: `http://localhost:5000/productos/${producto._id}/`,
-      headers: { 'Content-Type': 'application/json' },
-      data: { id: producto._id },
-    };
-
-    await axios
-      .request(options)
-      .then(function (response) {
+  const deleteProduct = async () => {
+    await eliminarProducto(
+      producto._id,
+      (response) => {
         console.log(response.data);
         toast.success('Producto eliminado con éxito');
         setEjecutarConsulta(true);
-      })
-      .catch(function (error) {
+      },
+      (error) => {
         console.error(error);
         toast.error('Error eliminando el producto');
-      });
+      }
+    );
+
     setOpenDialog(false);
   };
 
@@ -257,7 +261,7 @@ const FilaProducto = ({ producto, setEjecutarConsulta }) => {
             </h1>
             <div className='flex w-full items-center justify-center my-4'>
               <button
-                onClick={() => eliminarProducto()}
+                onClick={() => deleteProduct()}
                 className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'
               >
                 Sí
@@ -286,25 +290,23 @@ const FormularioCreacionProductos = ({ setMostrarTabla, listaProductos, setProdu
     const nuevoProducto = {};
     fd.forEach((value, key) => {
       nuevoProducto[key] = value;
-    });
+    });    
 
-    const options = {
-      method: 'POST',
-      url: 'http://localhost:5000/productos/',
-      headers: { 'Content-Type': 'application/json' },
-      data: { idProducto: nuevoProducto.idProducto, nombreProducto: nuevoProducto.nombreProducto, precio: nuevoProducto.precio },
-    };
-
-    await axios
-      .request(options)
-      .then(function (response) {
+    await crearProductos(
+      {
+        idProducto: nuevoProducto.idProducto,
+        nombreProducto: nuevoProducto.nombreProducto,
+        precio: nuevoProducto.precio,
+      },
+      (response) => {
         console.log(response.data);
-        toast.success('producto agregado con éxito');
-      })
-      .catch(function (error) {
+        toast.success('Producto agregado con éxito');
+      },
+      (error) => {
         console.error(error);
         toast.error('Error creando un producto');
-      });
+      }
+    );
 
     setMostrarTabla(true);
   };
