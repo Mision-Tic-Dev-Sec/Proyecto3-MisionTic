@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { obtenerVentas } from 'utils/api';
-import axios from 'axios';
+import { obtenerVentas, crearVenta, editarVenta, eliminarVenta } from 'utils/api';
 import { nanoid } from 'nanoid';
 import { Dialog, Tooltip } from '@material-ui/core';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
@@ -16,9 +15,18 @@ const Ventas = () => {
   const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
 
   useEffect(()=>{
-    console.log('consulta',ejecutarConsulta);
-    if (ejecutarConsulta){
-      obtenerVentas(setVentas,setEjecutarConsulta)
+    console.log('consulta', ejecutarConsulta);
+    if (ejecutarConsulta) {
+      obtenerVentas(
+        (response) => {
+          console.log('la respuesta que se recibio fue', response);
+          setVentas(response.data);
+        },
+        (error) => {
+          console.error('Salio un error:', error);
+        }
+      );
+      setEjecutarConsulta(false);
     }
   }, [ejecutarConsulta]);
 
@@ -142,46 +150,46 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
 
   const actualizarVenta = async () => {
     //enviar la info al backend
-    const options = {
-      method: 'PATCH',
-      url: `http://localhost:5000/ventas/${venta._id}/`,
-      headers: { 'Content-Type': 'application/json' },
-      data: { ...infoNuevaVenta },
-    };
-
-    await axios
-      .request(options)
-      .then(function (response) {
+    await editarVenta(
+      venta._id,
+      {
+        idVenta: infoNuevaVenta.idVenta,
+        valorVenta: infoNuevaVenta.valorVenta,
+        idProductos: infoNuevaVenta.idProductos,
+        cantidad: infoNuevaVenta.cantidad,
+        precioUnitario: infoNuevaVenta.precioUnitario,
+        fechaVenta: infoNuevaVenta.fechaVenta,
+        idCliente: infoNuevaVenta.idCliente,
+        nombreCliente: infoNuevaVenta.nombreCliente,
+        vendedor: infoNuevaVenta.vendedor,
+        estado: infoNuevaVenta.estado,
+      },
+      (response) => {
         console.log(response.data);
         toast.success('Venta modificada con éxito');
         setEdit(false);
         setEjecutarConsulta(true);
-      })
-      .catch(function (error) {
-        toast.error('Error modificando la venta');
+      },
+      (error) => {
+        toast.error('Error modificando el venta');
         console.error(error);
-      });
+      }
+    );
   };
 
-  const eliminarVenta = async () => {
-    const options = {
-      method: 'DELETE',
-      url: `http://localhost:5000/ventas/${venta._id}/`,
-      headers: { 'Content-Type': 'application/json' },
-      data: { id: venta._id },
-    };
-
-    await axios
-      .request(options)
-      .then(function (response) {
+  const deleteVenta = async () => {    
+    await eliminarVenta(
+      venta._id,
+      (response) => {
         console.log(response.data);
         toast.success('Venta eliminada con éxito');
         setEjecutarConsulta(true);
-      })
-      .catch(function (error) {
+      },
+      (error) => {
         console.error(error);
-        toast.error('Error eliminando la venta');
-      });
+        toast.error('Error eliminando venta');
+      }
+    );
     setOpenDialog(false);
   };
 
@@ -336,7 +344,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
             </h1>
             <div className='flex w-full items-center justify-center my-4'>
               <button
-                onClick={() => eliminarVenta()}
+                onClick={() => deleteVenta()}
                 className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'
               >
                 Sí
@@ -368,11 +376,9 @@ const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) =
       nuevaVenta[key] = value;
     });
 
-    const options = {
-      method: 'POST',
-      url: 'http://localhost:5000/ventas/',
-      headers: { 'Content-Type': 'application/json' },
-      data: { 
+    
+    await crearVenta(
+      {
         idVenta: nuevaVenta.idVenta,
         valorVenta: nuevaVenta.valorVenta,
         idProductos: nuevaVenta.idProductos,
@@ -382,20 +388,19 @@ const FormularioCreacionVentas = ({ setMostrarTabla, listaVentas, setVentas }) =
         idCliente: nuevaVenta.idCliente,
         nombreCliente: nuevaVenta.nombreCliente,
         vendedor: nuevaVenta.vendedor,
-        estado: nuevaVenta.estado
+        estado: nuevaVenta.estado,
       },
-    };
+      (response) => {
+        console.log(response.data);
+        toast.success('Venta agregada con éxito');
+      },
+      (error) => {
+        console.error(error);
+        toast.error('Error creando un venta');
+      }
+    );
 
-    await axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-      toast.success('Vehículo agregado con éxito');
-    })
-    .catch(function (error) {
-      console.error(error);
-      toast.error('Error creando un vehículo');
-    });
+    setMostrarTabla(true);
 
   };
 
