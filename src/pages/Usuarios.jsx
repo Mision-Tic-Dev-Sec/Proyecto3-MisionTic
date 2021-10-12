@@ -21,12 +21,13 @@ const Usuarios = () => {
         (response) => {
           console.log('la respuesta que se recibio fue', response);
           setUsuarios(response.data);
+          setEjecutarConsulta(false);
         },
         (error) => {
           console.error('Salio un error:', error);
         }
       );
-      setEjecutarConsulta(false);
+      
     }
   }, [ejecutarConsulta]);
 
