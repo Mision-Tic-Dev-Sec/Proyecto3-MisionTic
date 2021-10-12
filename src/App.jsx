@@ -9,17 +9,21 @@ import Productos from 'pages/Productos';
 import Ventas from 'pages/Ventas';
 import Usuarios from 'pages/Usuarios';
 import Vehiculos from 'pages/Vehiculos';
+import TestVenta from 'pages/TestVenta';
 
 function App() {
   return (
     <div className='App'>
         <Router>
           <Switch>
-            <Route path={['/inicio', '/productos', '/ventas', '/usuarios', '/vehiculos']}>
+            <Route path={['/inicio', '/productos', '/ventas', '/usuarios', '/vehiculos', '/testventas']}>
               <PublicLayout>
                 <Switch>
                   <Route path='/ventas'>
                    <Ventas />
+                  </Route>
+                  <Route path='/testventas'>
+                   <TestVenta />
                   </Route>
                   <Route path='/productos'>
                    <Productos />
