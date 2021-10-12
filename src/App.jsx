@@ -9,21 +9,21 @@ import Productos from 'pages/Productos';
 import Ventas from 'pages/Ventas';
 import Usuarios from 'pages/Usuarios';
 import Vehiculos from 'pages/Vehiculos';
-import TestVenta from 'pages/TestVenta';
+import Ventas2 from 'pages/Ventas2';
 
 function App() {
   return (
     <div className='App'>
         <Router>
           <Switch>
-            <Route path={['/inicio', '/productos', '/ventas', '/usuarios', '/vehiculos', '/testventas']}>
+            <Route path={['/inicio', '/productos', '/ventas', '/usuarios', '/vehiculos', '/ventas2']}>
               <PublicLayout>
                 <Switch>
                   <Route path='/ventas'>
                    <Ventas />
                   </Route>
-                  <Route path='/testventas'>
-                   <TestVenta />
+                  <Route path='/ventas2'>
+                   <Ventas2 />
                   </Route>
                   <Route path='/productos'>
                    <Productos />
