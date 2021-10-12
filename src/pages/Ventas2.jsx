@@ -70,7 +70,9 @@ const Ventas2 = () => {
 
     const datosVenta = {
       vendedor: vendedores.filter((v) => v._id === formData.vendedor)[0],
-      cantidad: formData.valor,
+      cantidad: formData.cantidadProducto,
+      valorVenta: formData.valorVenta,
+      clientes: formData.cliente,
       productos: listaProductos,
     };
 
@@ -98,7 +100,7 @@ const Ventas2 = () => {
               Seleccione un Vendedor
             </option>
             {vendedores.map((el) => {
-              return <option key={nanoid()} value={el._id}>{`${el.name} ${el.lastname}`}</option>;
+              return <option key={nanoid()} value={el._id}>{`${el.name}`}</option>;
             })}
           </select>
         </label>
@@ -109,12 +111,21 @@ const Ventas2 = () => {
           setProductosTabla={setProductosTabla}
         />
 
-        <label className='flex flex-col'>
+        <label className='flex flex-col' htmlFor='valorVenta'>
           <span className='text-2xl font-gray-900'>Valor Total Venta</span>
           <input
             className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
             type='number'
-            name='valor'
+            name='valorVenta'
+            required
+          />
+        </label>
+        <label className='flex flex-col' htmlFor='cliente'>
+          <span className='text-2xl font-gray-900'>cliente</span>
+          <input
+            className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+            type='text'
+            name='cliente'
             required
           />
         </label>
@@ -172,7 +183,7 @@ const TablaProductos = ({ productos, setProductos, setProductosTabla }) => {
                 <option
                   key={nanoid()}
                   value={el._id}
-                >{`${el.name} ${el.brand} ${el.model}`}</option>
+                >{`${el.idProducto} ${el.nombreProducto} ${el.precio}`}</option>
               );
             })}
           </select>
@@ -182,16 +193,15 @@ const TablaProductos = ({ productos, setProductos, setProductosTabla }) => {
           onClick={() => agregarNuevoProducto()}
           className='col-span-2 bg-green-400 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
         >
-          Agregar Vehículo
+          Agregar producto
         </button>
       </div>
       <table className='tabla'>
         <thead>
           <tr>
-            <th>Id</th>
+            <th>Id producto</th>
             <th>Nombre</th>
-            <th>Marca</th>
-            <th>Modelo</th>
+            <th>Precio</th>
             <th>Cantidad</th>
             <th>Eliminar</th>
             <th className='hidden'>Input</th>
@@ -201,19 +211,18 @@ const TablaProductos = ({ productos, setProductos, setProductosTabla }) => {
           {filasTabla.map((el, index) => {
             return (
               <tr key={nanoid()}>
-                <td>{el._id}</td>
-                <td>{el.name}</td>
-                <td>{el.brand}</td>
-                <td>{el.model}</td>
+                <td>{el.idProducto}</td>
+                <td>{el.nombreProducto}</td>
+                <td>{el.precio}</td>
                 <td>
-                  <label htmlFor={`valor_${index}`}>
-                    <input type='number' name={`cantidad_${index}`} />
+                  <label htmlFor={`cantidadProducto_${index}`}>
+                    <input type='number' name={`cantidadProducto_${index}`} />
                   </label>
                 </td>
                 <td>
                   <i
                     onClick={() => eliminarProducto(el)}
-                    className='fas fa-minus text-red-500 cursor-pointer'
+                    className='fas fa-trash text-red-500 cursor-pointer'
                   />
                 </td>
                 <input hidden defaultValue={el._id} name={`producto_${index}`} />
