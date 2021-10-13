@@ -13,7 +13,9 @@ const PrivateRoute = ({ children }) => {
       <> {children} </>
     ) : (
       <div>
-        No autorizado. <Link to='/'>Retornar al home</Link>
+        <div className='text-9xl text-red-800'>No estas autorizado.</div> 
+        
+        <Link to='/' className='text-6xl text-blue-800 hover:underline'>Por favor registrate</Link>
       </div>
     );
   };
