@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { crearVenta } from 'utils/api';
 import { obtenerProductos } from 'utils/api';
 import { obtenerUsuarios } from 'utils/api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Ventas2 = () => {
   const form = useRef(null);
@@ -69,11 +71,15 @@ const Ventas2 = () => {
     console.log('lista despues de cantidad', listaProductos);
 
     const datosVenta = {
-      vendedor: vendedores.filter((v) => v._id === formData.vendedor)[0],
-      cantidad: formData.cantidadProducto,
-      valorVenta: formData.valorVenta,
-      clientes: formData.cliente,
+      vendedor: vendedores.filter((v) => v._id === formData.vendedor)[0].name,
+      cantidad: formData.cantidad,
+      valorVenta: formData.valorVenta,      
       productos: listaProductos,
+      idVenta: formData.idVenta,      
+      fechaVenta: formData.fechaVenta,
+      idCliente: formData.idCliente,
+      nombreCliente: formData.nombreCliente,      
+      estado: formData.estado,
     };
 
     console.log('lista productos', listaProductos);
@@ -82,10 +88,13 @@ const Ventas2 = () => {
       datosVenta,
       (response) => {
         console.log(response);
+        toast.success('Producto agregado con éxito');
       },
       (error) => {
         console.error(error);
+        toast.error('Error creando un producto');
       }
+      
     );
   };
 
@@ -93,9 +102,27 @@ const Ventas2 = () => {
     <div className='flex h-full w-full items-center justify-center'>
       <form ref={form} onSubmit={submitForm} className='flex flex-col h-full'>
         <h1 className='text-3xl font-extrabold text-gray-900 my-3'>Crear una nueva venta</h1>
+        <label className='flex flex-col' htmlFor='idVenta'>
+          <span className='text-2xl font-gray-900 font-semibold'>Id venta</span>
+          <input
+            className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+            type='number'
+            name='idVenta'
+            required
+          />
+        </label>
+        <label className='flex flex-col' htmlFor='fechaVenta'>
+          <span className='text-2xl font-gray-900 font-semibold'>Fecha venta</span>
+          <input
+            className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+            type='datetime-local'
+            name='fechaVenta'
+            required
+          />
+        </label>
         <label className='flex flex-col' htmlFor='vendedor'>
-          <span className='text-2xl font-gray-900'>Vendedor</span>
-          <select name='vendedor' className='p-2' defaultValue='' required>
+          <span className='text-2xl font-gray-900 font-semibold'>Vendedor</span>
+          <select name='vendedor' className='p-2 mb-2' defaultValue='' required>
             <option disabled value=''>
               Seleccione un Vendedor
             </option>
@@ -104,6 +131,7 @@ const Ventas2 = () => {
             })}
           </select>
         </label>
+        <span className='text-2xl font-gray-900 font-semibold'>Productos</span>
 
         <TablaProductos
           productos={productos}
@@ -112,7 +140,7 @@ const Ventas2 = () => {
         />
 
         <label className='flex flex-col' htmlFor='valorVenta'>
-          <span className='text-2xl font-gray-900'>Valor Total Venta</span>
+          <span className='text-2xl font-gray-900 font-semibold'>Valor Total Venta</span>
           <input
             className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
             type='number'
@@ -120,14 +148,39 @@ const Ventas2 = () => {
             required
           />
         </label>
-        <label className='flex flex-col' htmlFor='cliente'>
-          <span className='text-2xl font-gray-900'>cliente</span>
+        <label className='flex flex-col' htmlFor='idCliente'>
+          <span className='text-2xl font-gray-900 font-semibold'>Id cliente</span>
+          <input
+            className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+            type='number'
+            name='idCliente'
+            required
+          />
+        </label>
+        <label className='flex flex-col' htmlFor='nombreCliente'>
+          <span className='text-2xl font-gray-900 font-semibold'>Cliente</span>
           <input
             className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
             type='text'
-            name='cliente'
+            name='nombreCliente'
             required
           />
+        </label>
+        <label className='flex flex-col' htmlFor='estado'>
+          <span className='text-2xl font-gray-900 font-semibold'>Estado</span>
+            <select
+              className='p-2 mb-2'
+              name='estado'
+              required
+              defaultValue=''
+            >
+              <option disabled value=''>
+                Seleccione una opción
+              </option>
+              <option>En proceso</option>
+              <option>Entregado</option>
+              <option>Cancelado</option>
+            </select>
         </label>
         <button
           type='submit'
@@ -135,6 +188,7 @@ const Ventas2 = () => {
         >
           Crear Venta
         </button>
+        <ToastContainer position='bottom-center' autoClose={5000} />
       </form>
     </div>
   );
@@ -191,7 +245,7 @@ const TablaProductos = ({ productos, setProductos, setProductosTabla }) => {
         <button
           type='button'
           onClick={() => agregarNuevoProducto()}
-          className='col-span-2 bg-green-400 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
+          className='col-span-2 bg-green-400 ml-4 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
         >
           Agregar producto
         </button>
@@ -215,8 +269,8 @@ const TablaProductos = ({ productos, setProductos, setProductosTabla }) => {
                 <td>{el.nombreProducto}</td>
                 <td>{el.precio}</td>
                 <td>
-                  <label htmlFor={`cantidadProducto_${index}`}>
-                    <input type='number' name={`cantidadProducto_${index}`} />
+                  <label htmlFor={`cantidad_${index}`}>
+                    <input type='number' name={`cantidad_${index}`} />
                   </label>
                 </td>
                 <td>
