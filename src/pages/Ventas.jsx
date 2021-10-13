@@ -139,9 +139,9 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
   const [infoNuevaVenta, setInfoNuevaVenta] = useState({
     idVenta: venta.idVenta,
     valorVenta: venta.valorVenta,
-    idProductos: venta.idProductos,
-    cantidad: venta.cantidad,
-    precioUnitario: venta.precioUnitario,
+    idProductos: venta.productos.map((el)=>el.idProducto),
+    cantidad: venta.productos.map((el)=>el.cantidad),
+    precioUnitario: venta.productos.map((el)=>el.precio),
     fechaVenta: venta.fechaVenta,
     idCliente: venta.idCliente,
     nombreCliente: venta.nombreCliente,
@@ -294,9 +294,9 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
         <>
           <td>{venta.idVenta}</td>
           <td>{venta.valorVenta}</td>
-          <td>{venta.idProductos}</td>
-          <td>{venta.cantidad}</td>
-          <td>{venta.precioUnitario}</td>
+          <td>{venta.productos.map((el)=>'|'+el.idProducto+' '+el.nombreProducto+'|')} </td>
+          <td>{venta.productos.map((el)=>'|'+el.cantidad+'|')}</td>
+          <td>{venta.productos.map((el)=>'|'+el.precio+'|')} <br/></td>
           <td>{venta.fechaVenta}</td>
           <td>{venta.idCliente}</td>
           <td>{venta.nombreCliente}</td>
