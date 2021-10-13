@@ -1,8 +1,9 @@
 import React from 'react';
 import Google from 'media/google_logo.png';
-import { Link } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Login = () => {
+  const { loginWithRedirect } = useAuth0();
   return (
     <>
       <div className='max-w-md w-full space-y-8'>
@@ -11,8 +12,9 @@ const Login = () => {
         </h2>
         </div>
       <div className='max-w-md w-full'>
-        <Link to='/inicio'>
+
           <button
+            onClick={() => loginWithRedirect()}
             type='submit'
             className='group relative w-full flex justify-center py-2 px-3 border border-transparent text-sm font-medium rounded-full text-gray-700 bg-purple-200 hover:bg-purple-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transform hover:scale-110'
           >
@@ -21,7 +23,7 @@ const Login = () => {
               <span className='mx-4'>Continúa con Google</span>
             </div>
           </button>
-        </Link>
+
       </div>
     </>
   );

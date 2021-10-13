@@ -10,10 +10,16 @@ import Ventas from 'pages/Ventas';
 import Usuarios from 'pages/Usuarios';
 import Vehiculos from 'pages/Vehiculos';
 import Ventas2 from 'pages/Ventas2';
+import { Auth0Provider } from "@auth0/auth0-react";
 
 function App() {
   return (
-    <div className='App'>
+    <Auth0Provider 
+    domain="mtictienda.us.auth0.com"
+    clientId="ryzJcg5oBn3FRV6CV8EKQgVJS4rBIKeo"
+    redirectUri={window.location.origin}>
+      
+      <div className='App'>
         <Router>
           <Switch>
             <Route path={['/inicio', '/productos', '/ventas', '/usuarios', '/vehiculos', '/ventas2']}>
@@ -50,6 +56,7 @@ function App() {
           </Switch>
         </Router>
     </div>
+    </Auth0Provider>
   );
 }
 

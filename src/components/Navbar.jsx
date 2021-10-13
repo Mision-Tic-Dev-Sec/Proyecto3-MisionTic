@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ImagenLogo from 'components/ImagenLogo';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
+  const { logout } = useAuth0();
   return (
     <nav className='bg-purple-100'>
       <ul className='flex w-full justify-between my-3 items-center'>
@@ -26,7 +28,8 @@ const Navbar = () => {
         </li>
         <li className='px-3'>
           <Link to='/'>
-            <button className='bg-indigo-500 p-2 px-5 text-white rounded-lg shadow-md hover:bg-indigo-700'>
+            <button className='bg-indigo-500 p-2 px-5 text-white rounded-lg shadow-md hover:bg-indigo-700'
+            onClick={() => logout({ returnTo: window.location.origin })}>
               Salir
             </button>
           </Link>
