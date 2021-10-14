@@ -323,9 +323,11 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
         <>
           <td>{venta.idVenta}</td>
           <td>{venta.valorVenta}</td>
-          <td>{venta.productos.map((el)=>`|${el.idProducto} ${el.nombreProducto}| `)} </td>
-          <td>{venta.productos.map((el)=>`|${el.cantidad}| `)}</td>
-          <td>{venta.productos.map((el)=>`|${el.precio}| `)} <br/></td>
+          <td><div className = 'flex flex-col'>{venta.productos.map((el)=> <td>{el.idProducto} - {el.nombreProducto}</td>)}</div> </td>
+          <td><div className = 'flex flex-col'>{venta.productos.map((el)=> <td>{el.cantidad}</td>)}</div> </td>
+          <td><div className = 'flex flex-col'>{venta.productos.map((el)=> <td>{el.precio}</td>)}</div> </td>
+          {/* <td>{venta.productos.map((el)=>`|${el.cantidad}| `)}</td>
+          <td>{venta.productos.map((el)=>`|${el.precio}| `)} <br/></td> */}
           <td>{venta.fechaVenta}</td>
           <td>{venta.idCliente}</td>
           <td>{venta.nombreCliente}</td>
