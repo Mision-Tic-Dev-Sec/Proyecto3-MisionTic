@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { Dialog, Tooltip } from '@material-ui/core';
 import { obtenerProductos, crearProductos, editarProducto, eliminarProducto } from 'utils/api';
 import 'react-toastify/dist/ReactToastify.css';
+import ReactLoading from 'react-loading';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
 // que diga si el usuario es mayor de edad o no
 
@@ -110,6 +111,9 @@ const TablaProductos = ({ loading, listaProductos, setEjecutarConsulta }) => {
         <div className="pr-2"><i class="fas fa-search"></i></div>
       </div>
       <div className='hidden md:flex w-full'>
+      {loading ? (
+          <ReactLoading type='spokes' color='#4338CA' height={667} width={375} />
+        ) : (
         <table className='tabla'>
           <thead>
             <tr>
@@ -131,6 +135,7 @@ const TablaProductos = ({ loading, listaProductos, setEjecutarConsulta }) => {
             })}
           </tbody>
         </table>
+      )}
       </div>
       <div className='flex flex-col w-full m-2 md:hidden'>
         {productosFiltrados.map((el) => {

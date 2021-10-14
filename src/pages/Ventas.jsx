@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { obtenerVentas, crearVenta, editarVenta, eliminarVenta } from 'utils/api';
 import { nanoid } from 'nanoid';
 import { Dialog, Tooltip } from '@material-ui/core';
+import ReactLoading from 'react-loading';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
 // que diga si el usuario es mayor de edad o no
 
@@ -13,23 +14,47 @@ const Ventas = () => {
   const [textoBoton, setTextoBoton] = useState('Crear Nueva venta');
   const [colorBoton, setColorBoton] = useState('indigo');
   const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
+  const [loading,setLoading] = useState(false);
 
-  useEffect(()=>{
-    console.log('consulta', ejecutarConsulta);
-    if (ejecutarConsulta) {
-      obtenerVentas(
+  // useEffect(()=>{
+  //   console.log('consulta', ejecutarConsulta);
+  //   if (ejecutarConsulta) {
+  //     obtenerVentas(
+  //       (response) => {
+  //         console.log('la respuesta que se recibio fue', response);
+  //         setVentas(response.data);
+  //         setEjecutarConsulta(false);
+  //       },
+  //       (error) => {
+  //         console.error('Salio un error:', error);
+  //       }
+  //     );
+      
+  //   }
+  // }, [ejecutarConsulta]);
+
+  useEffect(() => {
+    const fetchVentas = async () => {
+      setLoading(true);
+      await obtenerVentas(
         (response) => {
           console.log('la respuesta que se recibio fue', response);
           setVentas(response.data);
           setEjecutarConsulta(false);
+          setLoading(false);
         },
         (error) => {
           console.error('Salio un error:', error);
+          setLoading(false);
         }
       );
-      
+    };
+    console.log('consulta', ejecutarConsulta);
+    if (ejecutarConsulta) {
+      fetchVentas();
     }
   }, [ejecutarConsulta]);
+
 
   useEffect(() => {
     //obtener lista de vehículos desde el backend
@@ -64,7 +89,7 @@ const Ventas = () => {
         </button>
       </div>
       {mostrarTabla ? (
-        <TablaVentas listaVentas={ventas} setEjecutarConsulta={setEjecutarConsulta} />
+        <TablaVentas listaVentas={ventas} setEjecutarConsulta={setEjecutarConsulta} loading={loading}  />
       ) : (
         <FormularioCreacionVentas
           setMostrarTabla={setMostrarTabla}
@@ -77,7 +102,7 @@ const Ventas = () => {
   );
 };
 
-const TablaVentas = ({ listaVentas, setEjecutarConsulta }) => {
+const TablaVentas = ({ loading, listaVentas, setEjecutarConsulta }) => {
   const [busqueda, setBusqueda] = useState('');
   const [ventasFiltradas, setVentasFiltradas] = useState(listaVentas);
 
@@ -100,6 +125,9 @@ const TablaVentas = ({ listaVentas, setEjecutarConsulta }) => {
         className="focus-within:outline-none m-0 w-72 pl-2"/>
         <div className="pr-2"><i class="fas fa-search"></i></div>
       </div>
+      {loading ? (
+          <ReactLoading type='Spokes' color='#4338CA' height={667} width={375} />
+        ) : (
       <table className = 'tabla'>
         <thead>
           <tr>
@@ -129,6 +157,7 @@ const TablaVentas = ({ listaVentas, setEjecutarConsulta }) => {
           })}
         </tbody>
       </table>
+      )}
     </div>
   );
 };
@@ -294,9 +323,9 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
         <>
           <td>{venta.idVenta}</td>
           <td>{venta.valorVenta}</td>
-          <td>{venta.productos.map((el)=>'|'+el.idProducto+' '+el.nombreProducto+'|')} </td>
-          <td>{venta.productos.map((el)=>'|'+el.cantidad+'|')}</td>
-          <td>{venta.productos.map((el)=>'|'+el.precio+'|')} <br/></td>
+          <td>{venta.productos.map((el)=>`|${el.idProducto} ${el.nombreProducto}| `)} </td>
+          <td>{venta.productos.map((el)=>`|${el.cantidad}| `)}</td>
+          <td>{venta.productos.map((el)=>`|${el.precio}| `)} <br/></td>
           <td>{venta.fechaVenta}</td>
           <td>{venta.idCliente}</td>
           <td>{venta.nombreCliente}</td>

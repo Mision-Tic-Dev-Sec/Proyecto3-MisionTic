@@ -4,8 +4,8 @@ import ImagenLogo from 'components/ImagenLogo';
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
-  const { logout } = useAuth0();
-
+  const { user, logout } = useAuth0();
+  
   const cerrarSesion = ()=> {
     logout({ returnTo: 'http://localhost:3000/inicio' })
     localStorage.setItem('token',null)
@@ -14,7 +14,10 @@ const Navbar = () => {
     <nav className='bg-purple-100'>
       <ul className='flex w-full justify-between my-3 items-center'>
         <Link to='/inicio'>
-          <li className = 'h-50'><ImagenLogo/></li>
+          <li className = 'h-50'>            
+            <ImagenLogo/>
+            <span className='pl-6'>{`Hola, ${user.name}`}</span>                     
+          </li>
         </Link>
         <li>
           <Link to='/ventas'>

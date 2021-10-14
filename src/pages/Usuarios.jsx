@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { Dialog, Tooltip } from '@material-ui/core';
 import { obtenerUsuarios, eliminarUsuario, editarUsuario } from 'utils/api';
 import 'react-toastify/dist/ReactToastify.css';
+import ReactLoading from 'react-loading';
 // realizar un formulario que le pida al usuario su edad y muestre un mensaje
 // que diga si el usuario es mayor de edad o no
 
@@ -13,21 +14,44 @@ const Usuarios = () => {
   const [textoBoton, setTextoBoton] = useState('Crear Nuevo Usuario');
   const [colorBoton, setColorBoton] = useState('indigo');
   const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
+  const [loading,setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   console.log('consulta', ejecutarConsulta);
+  //   if (ejecutarConsulta) {
+  //     obtenerUsuarios(
+  //       (response) => {
+  //         console.log('la respuesta que se recibio fue', response);
+  //         setUsuarios(response.data);
+  //         setEjecutarConsulta(false);
+  //       },
+  //       (error) => {
+  //         console.error('Salio un error:', error);
+  //       }
+  //     );
+      
+  //   }
+  // }, [ejecutarConsulta]);
 
   useEffect(() => {
-    console.log('consulta', ejecutarConsulta);
-    if (ejecutarConsulta) {
-      obtenerUsuarios(
+    const fetchUsuarios = async () => {
+      setLoading(true);
+      await obtenerUsuarios(
         (response) => {
           console.log('la respuesta que se recibio fue', response);
           setUsuarios(response.data);
           setEjecutarConsulta(false);
+          setLoading(false);
         },
         (error) => {
           console.error('Salio un error:', error);
+          setLoading(false);
         }
       );
-      
+    };
+    console.log('consulta', ejecutarConsulta);
+    if (ejecutarConsulta) {
+      fetchUsuarios();
     }
   }, [ejecutarConsulta]);
 
@@ -63,7 +87,7 @@ const Usuarios = () => {
         </button>
       </div>
       {mostrarTabla ? (
-        <TablaUsuarios listaUsuarios={usuarios} setEjecutarConsulta={setEjecutarConsulta}/>
+        <TablaUsuarios listaUsuarios={usuarios} setEjecutarConsulta={setEjecutarConsulta} loading={loading}/>
       ) : (
         <ModificarPermisos
           setMostrarTabla={setMostrarTabla}
@@ -76,7 +100,7 @@ const Usuarios = () => {
   );
 };
 
-const TablaUsuarios = ({ listaUsuarios, setEjecutarConsulta }) => {
+const TablaUsuarios = ({ loading, listaUsuarios, setEjecutarConsulta }) => {
   const [busqueda, setBusqueda] = useState('');
   const [usuariosFiltrados, setUsuariosFiltrados] = useState(listaUsuarios);
 
@@ -99,6 +123,9 @@ const TablaUsuarios = ({ listaUsuarios, setEjecutarConsulta }) => {
         className="focus-within:outline-none m-0 w-72 pl-2"/>
         <div className="pr-2"><i class="fas fa-search"></i></div>
       </div>
+      {loading ? (
+          <ReactLoading type='Spokes' color='#4338CA' height={667} width={375} />
+        ) : (
       <table className = 'tabla'>
         <thead>
           <tr>
@@ -123,6 +150,7 @@ const TablaUsuarios = ({ listaUsuarios, setEjecutarConsulta }) => {
           })}
         </tbody>
       </table>
+      )}
     </div>
   );
 };

@@ -22,7 +22,7 @@ const PrivateRoute = ({ children }) => {
     }
   }, [isAuthenticated, getAccessTokenSilently]);
 
-  if (isLoading) return <ReactLoading type='cylon' color='#abc123' height={667} width={375} />;
+  if (isLoading) return <ReactLoading type='spokes' color='#4338CA' height={667} width={375} />;
 
   if (!isAuthenticated) {
     return loginWithRedirect();

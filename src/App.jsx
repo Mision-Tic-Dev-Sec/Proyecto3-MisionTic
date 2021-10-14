@@ -17,12 +17,13 @@ function App() {
     <Auth0Provider 
     domain="mtictienda.us.auth0.com"
     clientId="ryzJcg5oBn3FRV6CV8EKQgVJS4rBIKeo"
-    redirectUri={window.location.origin}>
+    redirectUri='http://localhost:3000/inicio'
+    audience='api-autenticacion-tienda-mintic'>
       
       <div className='App'>
         <Router>
           <Switch>
-            <Route path={['/inicio', '/productos', '/ventas', '/usuarios', '/vehiculos', '/ventas2']}>
+            <Route path={['/productos', '/ventas', '/usuarios', '/vehiculos', '/ventas2', '/']}>
               <PublicLayout>
                 <Switch>
                   <Route path='/ventas'>
@@ -40,19 +41,12 @@ function App() {
                   <Route path='/vehiculos'>
                    <Vehiculos />
                   </Route>
-                  <Route path='/inicio'>
+                  <Route path='/'>
                    <Inicio />
                   </Route>
                 </Switch>
               </PublicLayout>
-            </Route>
-            <Route path={['/']}>
-              <AuthLayout>
-                <Route path='/'>
-                  <Login />
-                </Route>
-              </AuthLayout>
-            </Route>
+            </Route>            
           </Switch>
         </Router>
     </div>
