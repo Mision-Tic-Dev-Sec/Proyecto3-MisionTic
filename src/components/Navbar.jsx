@@ -5,6 +5,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
   const { logout } = useAuth0();
+
+  const cerrarSesion = ()=> {
+    logout({ returnTo: window.location.origin })
+    localStorage.setItem('token',null)
+  }
   return (
     <nav className='bg-purple-100'>
       <ul className='flex w-full justify-between my-3 items-center'>
@@ -29,7 +34,7 @@ const Navbar = () => {
         <li className='px-3'>
           <Link to='/'>
             <button className='bg-indigo-500 p-2 px-5 text-white rounded-lg shadow-md hover:bg-indigo-700'
-            onClick={() => logout({ returnTo: window.location.origin })}>
+            onClick={() => cerrarSesion()}>
               Salir
             </button>
           </Link>

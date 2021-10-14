@@ -13,21 +13,27 @@ const Productos = () => {
   const [textoBoton, setTextoBoton] = useState('Crear Nuevo producto');
   const [colorBoton, setColorBoton] = useState('indigo');
   const [ejecutarConsulta, setEjecutarConsulta] = useState(true);
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('consulta', ejecutarConsulta);
-    if (ejecutarConsulta) {
-      obtenerProductos(
+    const fetchProductos = async () => {
+      setLoading(true);
+      await obtenerProductos(
         (response) => {
           console.log('la respuesta que se recibio fue', response);
           setProductos(response.data);
           setEjecutarConsulta(false);
+          setLoading(false);
         },
         (error) => {
           console.error('Salio un error:', error);
+          setLoading(false);
         }
       );
-      
+    };
+    console.log('consulta', ejecutarConsulta);
+    if (ejecutarConsulta) {
+      fetchProductos();
     }
   }, [ejecutarConsulta]);
 
@@ -63,7 +69,11 @@ const Productos = () => {
         </button>
       </div>
       {mostrarTabla ? (
-        <TablaProductos listaProductos={productos} setEjecutarConsulta={setEjecutarConsulta} />
+        <TablaProductos 
+          loading={loading} 
+          listaProductos={productos} 
+          setEjecutarConsulta={setEjecutarConsulta} 
+        />
       ) : (
         <FormularioCreacionProductos
           setMostrarTabla={setMostrarTabla}
@@ -76,7 +86,7 @@ const Productos = () => {
   );
 };
 
-const TablaProductos = ({ listaProductos, setEjecutarConsulta }) => {
+const TablaProductos = ({ loading, listaProductos, setEjecutarConsulta }) => {
   const [busqueda, setBusqueda] = useState('');
   const [productosFiltrados, setProductosFiltrados] = useState(listaProductos);
 
