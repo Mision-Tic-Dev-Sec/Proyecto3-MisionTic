@@ -7,7 +7,7 @@ const Navbar = () => {
   const { logout } = useAuth0();
 
   const cerrarSesion = ()=> {
-    logout({ returnTo: window.location.origin })
+    logout({ returnTo: 'http://localhost:3000/inicio' })
     localStorage.setItem('token',null)
   }
   return (
@@ -31,13 +31,11 @@ const Navbar = () => {
             <button className ='bg-blue-800 p-2 text-white rounded-lg shadow-md hover:bg-blue-900'>Administrar usuarios</button>
           </Link>
         </li>
-        <li className='px-3'>
-          <Link to='/'>
+        <li className='px-3'>         
             <button className='bg-indigo-500 p-2 px-5 text-white rounded-lg shadow-md hover:bg-indigo-700'
             onClick={() => cerrarSesion()}>
               Salir
-            </button>
-          </Link>
+            </button>          
         </li>
       </ul>
     </nav>
