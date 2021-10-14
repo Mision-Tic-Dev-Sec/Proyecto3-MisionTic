@@ -181,13 +181,13 @@ const Ventas2 = () => {
               <option>Entregado</option>
               <option>Cancelado</option>
             </select>
-        </label>
-        <button
-          type='submit'
-          className='col-span-2 bg-green-400 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
-        >
-          Crear Venta
-        </button>
+        </label>        
+          <button
+            type='submit'
+            className='col-span-2 bg-green-400 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
+          >          
+            Crear Venta          
+          </button>       
         <ToastContainer position='bottom-center' autoClose={5000} />
       </form>
     </div>
