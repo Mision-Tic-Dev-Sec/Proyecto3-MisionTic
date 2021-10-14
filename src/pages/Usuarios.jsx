@@ -134,7 +134,6 @@ const TablaUsuarios = ({ loading, listaUsuarios, setEjecutarConsulta }) => {
             <th>Correo</th>
             <th>Rol</th>
             <th>Estado</th>
-            <th>Fecha Ingreso</th>
             <th>Acciones</th>            
           </tr>
         </thead>
@@ -164,7 +163,6 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
     email: usuario.email,
     rol: usuario.rol,
     state: usuario.state,
-    date: usuario.date
   });
 
   const actualizarUsuario = async () => {
@@ -178,7 +176,6 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
         email: infoNuevoUsuario.email,
         rol: infoNuevoUsuario.rol,
         state: infoNuevoUsuario.state,
-        date: infoNuevoUsuario.date
       },
       (response) => {
         console.log(response.data);
@@ -228,6 +225,7 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
               <option disabled value={0}>
                 Elija una opción
               </option>
+              <option>Inactivo</option>
               <option>Administrador</option>
               <option>Vendedor</option>
             </select>
@@ -246,8 +244,7 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
               <option>No autorizado</option>
               <option>Pendiente</option>
             </select>
-          </td>
-          <td>{usuario.date}</td>        
+          </td>        
           
         </>
       ) : (
@@ -257,7 +254,6 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
           <td>{usuario.email}</td>
           <td>{usuario.rol}</td>
           <td>{usuario.state}</td>          
-          <td>{usuario.date}</td>
         </>
       )}
       <td>
