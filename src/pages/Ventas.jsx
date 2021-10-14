@@ -232,7 +232,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
           </td>
           <td>
             <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
               value={infoNuevaVenta.valorVenta}
               onChange={(e) => setInfoNuevaVenta({ ...infoNuevaVenta, valorVenta: e.target.value })}
@@ -240,7 +240,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
           </td>
           <td>
             <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
               value={infoNuevaVenta.idProductos}
               onChange={(e) =>
@@ -250,7 +250,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
           </td>
           <td>
             <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
               value={infoNuevaVenta.cantidad}
               onChange={(e) =>
@@ -260,7 +260,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
           </td>
           <td>
             <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
               value={infoNuevaVenta.precioUnitario}
               onChange={(e) =>
@@ -270,7 +270,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
           </td>
           <td>
             <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
               value={infoNuevaVenta.fechaVenta}
               onChange={(e) =>
@@ -280,7 +280,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
           </td>
           <td>
             <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
               value={infoNuevaVenta.idCliente}
               onChange={(e) =>
@@ -290,7 +290,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
           </td>
           <td>
             <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
               value={infoNuevaVenta.nombreCliente}
               onChange={(e) =>
@@ -300,7 +300,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
           </td>
           <td>
             <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
               value={infoNuevaVenta.vendedor}
               onChange={(e) =>
@@ -310,7 +310,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
           </td>
           <td>
             <input
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2'
+              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
               value={infoNuevaVenta.estado}
               onChange={(e) =>
