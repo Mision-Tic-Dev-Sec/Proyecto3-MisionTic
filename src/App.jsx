@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PublicLayout from 'layouts/PublicLayout';
 import Inicio from 'pages/Inicio';
 import Login from 'pages/auth/Login';
@@ -11,8 +11,11 @@ import Usuarios from 'pages/Usuarios';
 import Vehiculos from 'pages/Vehiculos';
 import Ventas2 from 'pages/Ventas2';
 import { Auth0Provider } from "@auth0/auth0-react";
+import { UserContext } from 'context/userContext';
 
 function App() {
+  const [userData, setUserData] = useState({});
+
   return (
     <Auth0Provider 
     domain="mtictienda.us.auth0.com"
@@ -21,6 +24,7 @@ function App() {
     audience='api-autenticacion-tienda-mintic'>
       
       <div className='App'>
+        <UserContext.Provider value={{ userData, setUserData }}>
         <Router>
           <Switch>
             <Route path={['/productos', '/ventas', '/usuarios', '/vehiculos', '/ventas2', '/']}>
@@ -49,6 +53,7 @@ function App() {
             </Route>            
           </Switch>
         </Router>
+        </UserContext.Provider>
     </div>
     </Auth0Provider>
   );
