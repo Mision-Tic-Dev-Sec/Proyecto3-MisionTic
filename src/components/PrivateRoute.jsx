@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import ReactLoading from 'react-loading';
+import { obtenerDatosUsuario } from 'utils/api';
+
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, isLoading, loginWithRedirect, getAccessTokenSilently } = useAuth0();
 
@@ -12,10 +14,24 @@ const PrivateRoute = ({ children }) => {
       // } else {
       //   // pedir token
       // }
+
+      // 1. pedir token a auth0
       const accessToken = await getAccessTokenSilently({
         audience: `api-autenticacion-tienda-mintic`,
       });
+      // 2. recibir token de auth0
       localStorage.setItem('token', accessToken);
+      console.log(accessToken);
+      // 3. enviarle el token a el backend
+      await obtenerDatosUsuario(
+        (response) => {
+          console.log('response con datos del usuario', response);
+          //setUserData(response.data);
+        },
+        (err) => {
+          console.log('err', err);
+        }
+      );
     };
     if (isAuthenticated) {
       fetchAuth0Token();
@@ -44,42 +60,3 @@ const PrivateRoute = ({ children }) => {
 // };
 
 export default PrivateRoute;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* import React from 'react';
-import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from 'react-router-dom';
-
-const PrivateRoute = ({ children }) => {
-    const { isAuthenticated, isLoading } = useAuth0();
-    console.log(isAuthenticated);
-    if (isLoading) {
-      return <div>Loading ...</div>;
-    }
-  
-    return isAuthenticated ? (
-      <> {children} </>
-    ) : (
-      <div>
-        <div className='text-9xl text-red-800'>No estas autorizado.</div> 
-        
-        <Link to='/' className='text-6xl text-blue-800 hover:underline'>Por favor registrate</Link>
-      </div>
-    );
-  };
-
-export default PrivateRoute */

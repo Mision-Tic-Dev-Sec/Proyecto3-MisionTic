@@ -161,7 +161,7 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
   const [infoNuevoUsuario, setInfoNuevoUsuario] = useState({
     id: usuario._id,
     name: usuario.name,
-    mail: usuario.mail,
+    email: usuario.email,
     rol: usuario.rol,
     state: usuario.state,
     date: usuario.date
@@ -175,7 +175,7 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
       {
         id: infoNuevoUsuario._id,
         name: infoNuevoUsuario.name,
-        mail: infoNuevoUsuario.mail,
+        email: infoNuevoUsuario.email,
         rol: infoNuevoUsuario.rol,
         state: infoNuevoUsuario.state,
         date: infoNuevoUsuario.date
@@ -215,7 +215,7 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
         <>
           <td>{usuario._id}</td>
           <td>{usuario.name}</td>
-          <td>{usuario.mail}</td>
+          <td>{usuario.email}</td>
           <td>
             <select
               className='bg-white border border-gray-600 p-2 rounded-lg m-2 focus-within:outline-none border-none'
@@ -254,7 +254,7 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
         <>
           <td>{usuario._id}</td>
           <td>{usuario.name}</td>
-          <td>{usuario.mail}</td>
+          <td>{usuario.email}</td>
           <td>{usuario.rol}</td>
           <td>{usuario.state}</td>          
           <td>{usuario.date}</td>
