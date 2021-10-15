@@ -26,6 +26,8 @@ const Navbar = () => {
             <button className ='bg-blue-800 p-2 text-white rounded-lg shadow-md hover:bg-blue-900'>Administrar ventas</button>
           </Link>
         </li>
+        </PrivateComponent>
+        <PrivateComponent roleList={['Adminisitrador']} stateList={['Autorizado']}>
         <li>
           <Link to ='/productos'>
             <button className ='bg-blue-800 p-2 text-white rounded-lg shadow-md hover:bg-blue-900'>Administrar productos</button>

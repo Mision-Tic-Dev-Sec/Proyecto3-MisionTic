@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PublicLayout from 'layouts/PublicLayout';
 import Inicio from 'pages/Inicio';
-import Login from 'pages/auth/Login';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'styles/styles.css';
-import AuthLayout from 'layouts/AuthLayout';
 import Productos from 'pages/Productos';
 import Ventas from 'pages/Ventas';
 import Usuarios from 'pages/Usuarios';
@@ -12,6 +10,7 @@ import Vehiculos from 'pages/Vehiculos';
 import Ventas2 from 'pages/Ventas2';
 import { Auth0Provider } from "@auth0/auth0-react";
 import { UserContext } from 'context/userContext';
+import PrivateRoute from 'components/PrivateRoute';
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -31,16 +30,24 @@ function App() {
               <PublicLayout>
                 <Switch>
                   <Route path='/ventas'>
-                   <Ventas />
+                    <PrivateRoute roleList={["Administrador", "Vendedor"]} stateList={["Autorizado"]}>
+                      <Ventas />
+                    </PrivateRoute>
                   </Route>
                   <Route path='/ventas2'>
-                   <Ventas2 />
+                    <PrivateRoute roleList={["Administrador", "Vendedor"]} stateList={["Autorizado"]}>
+                      <Ventas2 />
+                    </PrivateRoute>
                   </Route>
                   <Route path='/productos'>
-                   <Productos />
+                    <PrivateRoute roleList={["Administrador"]} stateList={["Autorizado"]}>
+                      <Productos />
+                    </PrivateRoute>
                   </Route>
                   <Route path='/usuarios'>
-                   <Usuarios />
+                    <PrivateRoute roleList={["Administrador"]} stateList={["Autorizado"]}>
+                      <Usuarios />
+                    </PrivateRoute>
                   </Route>
                   <Route path='/vehiculos'>
                    <Vehiculos />
