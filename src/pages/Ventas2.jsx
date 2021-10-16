@@ -126,7 +126,7 @@ const Ventas2 = () => {
             <option disabled value=''>
               Seleccione un Vendedor
             </option>
-            {vendedores.map((el) => {
+            {vendedores.filter(el => el.state==="Autorizado").map((el) => {
               return <option key={nanoid()} value={el._id}>{`${el.name}`}</option>;
             })}
           </select>
