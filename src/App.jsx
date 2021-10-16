@@ -12,6 +12,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { UserContext } from 'context/userContext';
 import PrivateRoute from 'components/PrivateRoute';
 import TestVenta from 'pages/TestVenta';
+import VentaProductos from 'pages/VentaProductos';
 
 function App() {
   const [userData, setUserData] = useState({});
@@ -27,7 +28,7 @@ function App() {
         <UserContext.Provider value={{ userData, setUserData }}>
         <Router>
           <Switch>
-            <Route path={['/productos', '/ventas', '/usuarios', '/vehiculos', '/ventas2', '/testVenta', '/']}>
+            <Route path={['/productos', '/ventas', '/usuarios', '/vehiculos', '/ventas2', '/testVenta', '/ventaProductos', '/']}>
               <PublicLayout>
                 <Switch>
                   <Route path='/ventas'>
@@ -55,6 +56,9 @@ function App() {
                   </Route>
                   <Route path='/testVenta'>
                    <TestVenta />
+                  </Route>
+                  <Route path='/ventaProductos'>
+                   <VentaProductos />
                   </Route>
                   <Route path='/'>
                    <Inicio />
