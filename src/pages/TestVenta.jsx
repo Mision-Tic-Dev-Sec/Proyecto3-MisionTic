@@ -1,21 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { nanoid } from 'nanoid';
+import React, { useState, useEffect, useRef } from 'react';
 import { crearVenta } from 'utils/api';
 import { obtenerProductos } from 'utils/api';
 import { obtenerUsuarios } from 'utils/api';
 
+
 const TestVenta = () => {
   const form = useRef(null);
   const [vendedores, setVendedores] = useState([]);
-  const [productos, setProductos] = useState([]);
-  const [filasTabla, setFilasTabla] = useState([]);
-  const [productoSeleccionado, setProductoSeleccionado] = useState([]);
+  const [productos, setproductos] = useState([]);
+  const [productosTabla, setproductosTabla] = useState([]);
 
   useEffect(() => {
     const fetchVendores = async () => {
       await obtenerUsuarios(
         (response) => {
-          console.log('respuesta de usuarios', response);
           setVendedores(response.data);
         },
         (error) => {
@@ -23,10 +22,10 @@ const TestVenta = () => {
         }
       );
     };
-    const fetchProductos = async () => {
+    const fetchproductos = async () => {
       await obtenerProductos(
         (response) => {
-          setProductos(response.data);
+          setproductos(response.data);
         },
         (error) => {
           console.error(error);
@@ -35,7 +34,7 @@ const TestVenta = () => {
     };
 
     fetchVendores();
-    fetchProductos();
+    fetchproductos();
   }, []);
 
   const submitForm = async (e) => {
@@ -47,22 +46,25 @@ const TestVenta = () => {
       formData[key] = value;
     });
 
-    const listaProductos = Object.keys(formData)
-      .map((el) => {
-        if (el.includes('producto')) {
-          return filasTabla.filter((v) => v._id === formData[el])[0];
-        } else return null;
+    console.log('form data', formData);
+
+    const listaproductos = Object.keys(formData)
+      .map((k) => {
+        if (k.includes('producto')) {
+          return productosTabla.filter((v) => v._id === formData[k])[0];
+        }
+        return null;
       })
       .filter((v) => v);
 
-    const infoConsolidada = {
-      valor: formData.valor,
+    const datosVenta = {
       vendedor: vendedores.filter((v) => v._id === formData.vendedor)[0],
-      productos: listaProductos,
+      cantidad: formData.valor,
+      productos: listaproductos,
     };
 
     await crearVenta(
-      infoConsolidada,
+      datosVenta,
       (response) => {
         console.log(response);
       },
@@ -78,28 +80,20 @@ const TestVenta = () => {
         <h1 className='text-3xl font-extrabold text-gray-900 my-3'>Crear una nueva venta</h1>
         <label className='flex flex-col' htmlFor='vendedor'>
           <span className='text-2xl font-gray-900'>Vendedor</span>
-          <select
-            name='vendedor'
-            className='mx-2 p-2 border border-gray-400 rounded-lg focus:outline-none'
-            defaultValue=''
-            required
-          >
+          <select name='vendedor' className='p-2' defaultValue='' required>
             <option disabled value=''>
               Seleccione un Vendedor
             </option>
             {vendedores.map((el) => {
-              return <option key={nanoid()} value={el._id}>{`${el.name} ${el.rol}`}</option>;
+              return <option key={nanoid()} value={el._id}>{`${el.email}`}</option>;
             })}
           </select>
         </label>
 
-        <RepetidorTabla
+        <Tablaproductos
           productos={productos}
-          productoSeleccionado={productoSeleccionado}
-          setProductoSeleccionado={setProductoSeleccionado}
-          filasTabla={filasTabla}
-          setFilasTabla={setFilasTabla}
-          setProductos={setProductos}
+          setproductos={setproductos}
+          setproductosTabla={setproductosTabla}
         />
 
         <label className='flex flex-col'>
@@ -122,78 +116,92 @@ const TestVenta = () => {
   );
 };
 
-const RepetidorTabla = ({
-  productos,
-  productoSeleccionado,
-  setProductoSeleccionado,
-  filasTabla,
-  setFilasTabla,
-  setProductos,
-}) => {
-  const agregarNuevoProducto = () => {
-    setFilasTabla([...filasTabla, productoSeleccionado]);
-    setProductos(productos.filter((el) => el !== productoSeleccionado));
-    setProductoSeleccionado('');
+const Tablaproductos = ({ productos, setproductos, setproductosTabla }) => {
+  const [productoAAgregar, setproductoAAgregar] = useState({});
+  const [filasTabla, setFilasTabla] = useState([]);
+
+  useEffect(() => {
+    setproductosTabla(filasTabla);
+  }, [filasTabla, setproductosTabla]);
+
+  const agregarNuevoproducto = () => {
+    setFilasTabla([...filasTabla, productoAAgregar]);
+    setproductos(productos.filter((v) => v._id !== productoAAgregar._id));
+    setproductoAAgregar({});
   };
 
-  const deleteFila = (v) => {
-    setFilasTabla(filasTabla.filter((el) => el !== v));
-    setProductos([...productos, v]);
+  const eliminarproducto = (productoAEliminar) => {
+    setFilasTabla(filasTabla.filter((v) => v._id !== productoAEliminar._id));
+    setproductos([...productos, productoAEliminar]);
   };
+
+  const modificarproducto = (producto, cantidad) => {
+    setFilasTabla(
+      filasTabla.map((ft) => {
+        if (ft._id === producto.idProducto) {
+          ft.cantidad = cantidad;
+          ft.total = producto.precio * cantidad;
+        }
+        return ft;
+      })
+    );
+  };
+
   return (
-    <div className='my-4'>
-      <span className='text-2xl font-gray-900'>Vehículos</span>
-      <div className='flex'>
-        <label className='flex flex-col m-2' htmlFor='producto'>
+    <div>
+      <div className='flex '>
+        <label className='flex flex-col' htmlFor='producto'>
           <select
-            className='p-2 border border-gray-400 rounded-lg focus:outline-none'
-            value={productoSeleccionado._id ?? ''}
+            className='p-2'
+            value={productoAAgregar._id ?? ''}
             onChange={(e) =>
-              setProductoSeleccionado(productos.filter((v) => v._id === e.target.value)[0])
+              setproductoAAgregar(productos.filter((v) => v._id === e.target.value)[0])
             }
           >
             <option disabled value=''>
-              Seleccione un Producto
+              Seleccione un producto
             </option>
-            {productos
-              .filter((el) => !filasTabla.includes(el._id))
-              .map((el) => {
-                return (
-                  <option
-                    key={nanoid()}
-                    value={el._id}
-                  >{`${el.idProducto} ${el.nombreProducto} ${el.precio}`}</option>
-                );
-              })}
+            {productos.map((el) => {
+              return (
+                <option
+                  key={nanoid()}
+                  value={el._id}
+                >{`${el.idProducto} ${el.nombreProducto} ${el.precio}`}</option>
+              );
+            })}
           </select>
         </label>
         <button
           type='button'
-          onClick={() => {
-            agregarNuevoProducto(productoSeleccionado);
-          }}
-          className='m-2  bg-green-400 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
+          onClick={() => agregarNuevoproducto()}
+          className='col-span-2 bg-green-400 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
         >
-          Agregar Vehículo
+          Agregar Producto
         </button>
       </div>
       <table className='tabla'>
         <thead>
           <tr>
-            <th>Id Producto</th>
+            <th>Id</th>
+            <th>idProducto</th>
             <th>Nombre</th>
             <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Valor Unitario</th>
+            <th>Total</th>
             <th>Eliminar</th>
+            <th className='hidden'>Input</th>
           </tr>
         </thead>
         <tbody>
-          {filasTabla.map((producto, index) => {
+          {filasTabla.map((el, index) => {
             return (
-              <FilaProducto
-                key={nanoid()}
-                nombre={`producto_${index}`}
-                productoSeleccionado={producto}
-                deleteFila={deleteFila}
+              <Filaproducto
+                key={el._id}
+                veh={el}
+                index={index}
+                eliminarproducto={eliminarproducto}
+                modificarproducto={modificarproducto}
               />
             );
           })}
@@ -203,24 +211,49 @@ const RepetidorTabla = ({
   );
 };
 
-const FilaProducto = ({ nombre, productoSeleccionado, deleteFila }) => {
+const Filaproducto = ({ veh, index, eliminarproducto, modificarproducto }) => {
+  const [producto, setproducto] = useState(veh);
+  useEffect(() => {
+    console.log('veh', producto);
+  }, [producto]);
   return (
     <tr>
-      <td>{productoSeleccionado.idProducto ?? ''}</td>
-      <td>{productoSeleccionado.nombreProducto ?? ''}</td>
-      <td>{productoSeleccionado.precio ?? ''}</td>
+      <td>{producto._id}</td>
+      <td>{producto.idProducto}</td>
+      <td>{producto.nombreProducto}</td>
+      <td>{producto.precio}</td>
+      <td>
+        <label htmlFor={`valor_${index}`}>
+          <input
+            type='number'
+            name={`cantidad_${index}`}
+            value={producto.cantidad}
+            onChange={(e) => {
+              modificarproducto(producto, e.target.value === '' ? '0' : e.target.value);
+              setproducto({
+                ...producto,
+                cantidad: e.target.value === '' ? '0' : e.target.value,
+                total:
+                  parseFloat(producto.precio) *
+                  parseFloat(e.target.value === '' ? '0' : e.target.value),
+              });
+            }}
+          />
+        </label>
+      </td>
+      <td>{producto.precio}</td>
+      <td>{parseFloat(producto.total ?? 0)}</td>
       <td>
         <i
-          onClick={() => deleteFila(productoSeleccionado)}
-          className='fas fa-minus cursor-pointer hover:text-red-500'
+          onClick={() => eliminarproducto(producto)}
+          className='fas fa-minus text-red-500 cursor-pointer'
         />
       </td>
       <td className='hidden'>
-        <input hidden defaultValue={productoSeleccionado._id} name={nombre} />
+        <input hidden defaultValue={producto._id} name={`producto_${index}`} />
       </td>
     </tr>
   );
 };
 
 export default TestVenta;
-
