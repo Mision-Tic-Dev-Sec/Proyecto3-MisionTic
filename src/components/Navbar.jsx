@@ -8,7 +8,7 @@ const Navbar = () => {
   const { user, logout } = useAuth0();
   
   const cerrarSesion = ()=> {
-    logout({ returnTo: 'http://localhost:3000/inicio' })
+    logout({ returnTo: 'https://agile-eyrie-13769.herokuapp.com/inicio' })
     localStorage.setItem('token',null)
   }
   return (
