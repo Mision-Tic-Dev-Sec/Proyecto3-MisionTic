@@ -21,7 +21,7 @@ function App() {
     <Auth0Provider 
     domain="mtictienda.us.auth0.com"
     clientId="ryzJcg5oBn3FRV6CV8EKQgVJS4rBIKeo"
-    redirectUri='http://localhost:3000/inicio'
+    redirectUri='https://agile-eyrie-13769.herokuapp.com/inicio'
     audience='api-autenticacion-tienda-mintic'>
       
       <div className='App'>
