@@ -235,7 +235,7 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
               onChange={(e) => setInfoNuevaVenta({ ...infoNuevaVenta, valorVenta: e.target.value })}
             />
           </td>
-          <td>
+{/*           <td>
             <input
               className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
@@ -244,8 +244,8 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
                 setInfoNuevaVenta({ ...infoNuevaVenta, idProductos: e.target.value })
               }
             />
-          </td>
-          <td>
+          </td> */}
+          {/* <td>
             <input
               className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
               type='text'
@@ -264,7 +264,10 @@ const FilaVentas = ({ venta, setEjecutarConsulta }) => {
                 setInfoNuevaVenta({ ...infoNuevaVenta, precioUnitario: e.target.value })
               }
             />
-          </td>
+          </td> */}
+          <td><div className = 'flex flex-col'>{venta.productos.map((el)=> <td>{el.idProducto} - {el.nombreProducto}</td>)}</div></td>
+          <td><div className = 'flex flex-col'>{venta.productos.map((el)=> <td>{el.cantidad}</td>)}</div> </td>
+          <td><div className = 'flex flex-col'>{venta.productos.map((el)=> <td>{el.precio}</td>)}</div> </td>
           <td>
             <input
               className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-28'
