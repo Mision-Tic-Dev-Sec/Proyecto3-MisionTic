@@ -86,15 +86,16 @@ const Usuarios = () => {
           {textoBoton}
         </button>
       </div>
-      {mostrarTabla ? (
-        <TablaUsuarios listaUsuarios={usuarios} setEjecutarConsulta={setEjecutarConsulta} loading={loading}/>
+      <TablaUsuarios listaUsuarios={usuarios} setEjecutarConsulta={setEjecutarConsulta} loading={loading}/>
+     {/*  {mostrarTabla ? (
+       
       ) : (
         <ModificarPermisos
           setMostrarTabla={setMostrarTabla}
           // listaVehiculos={usuarios}
           // setVehiculos={setUsuarios}
         />
-      )}
+      )} */}
       <ToastContainer position='bottom-center' autoClose={2000} />
     </div>
   );
@@ -316,7 +317,7 @@ const FilaUsuarios = ({ usuario, setEjecutarConsulta }) => {
   );
 };
 
-const ModificarPermisos = ({setMostrarTabla, mostrarTabla}) => {
+/* const ModificarPermisos = ({setMostrarTabla, mostrarTabla}) => {
   
   return (
     <div className='flex flex-col items-center justify-center w-96'>
@@ -386,6 +387,6 @@ const ModificarPermisos = ({setMostrarTabla, mostrarTabla}) => {
       </button>
     </div>
   );
-};
+}; */
 
 export default Usuarios;
