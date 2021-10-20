@@ -37,17 +37,17 @@ const VentaProductos = () => {
           </tr>
         </thead>
         <tbody>
-          {ventas.map((el) => {
+          {ventas.map((venta) => {
             return (
               <tr key={nanoid()}>
-                {el.productos.map((ele)=>{
+                {venta.productos.map((producto, index)=>{
                   return (
                     <tr key={nanoid()} className='flex'>
-                      <td>{ele.precio}</td>
+                      <td>{producto.precio}</td>
                       <td>
-                        <CantidadProducto ele={ele} />
+                        <CantidadProducto index={index} venta={venta} producto={producto} />
                       </td>
-                      <td>{ele.nombreProducto}</td>
+                      <td>{producto.nombreProducto}</td>
                     </tr>
                   )})}                                
               </tr>
@@ -59,26 +59,33 @@ const VentaProductos = () => {
   );
 };
 
-const CantidadProducto = ({ ele }) => {
-  const [cantidad, setCantidad] = useState(ele.cantidad);
+const CantidadProducto = ({ venta, producto, index }) => {
+  const [cantidad, setCantidad] = useState(producto.cantidad);
+  const actualizarVenta = async (cantidad)=>{
+    venta.productos[index].cantidad = cantidad
+    await editarVenta (venta._id, venta)
+  }
 
-  useEffect(() => {
-    const editVenta = async () => {
-      await editarVenta(
-        ele._id,
-        { cantidad },
-        (res) => {
-          console.log(res);
-        },
-        (err) => {
-          console.error(err);
-        }
-      );
-    };
-    if (ele.cantidad !== cantidad) {
-      editVenta();
-    }
-  }, [cantidad, ele]);
+  useEffect(()=>{
+      actualizarVenta(cantidad)
+  },[cantidad])
+  // useEffect(() => {
+  //   const editVenta = async () => {
+  //     await editarVenta(
+  //       el._id,
+  //       { cantidad },
+  //       (res) => {
+  //         console.log(res);
+  //       },
+  //       (err) => {
+  //         console.error(err);
+  //       }
+  //     );
+  //   };
+  //   if (ele.cantidad !== cantidad) {
+  //     editVenta();
+  //   }
+  // }, [cantidad, ele]);
 
   return (
       <input type="text" value={cantidad} onChange={(e)=>setCantidad(e.target.value)} />

@@ -90,6 +90,7 @@ export const crearVenta = async (data, successCallback, errorCallback) => {
 };
 
 export const editarVenta = async (id, data, successCallback, errorCallback) => {
+  console.log(data)
   const options = {
     method: 'PATCH',
     url: `http://localhost:5000/ventas/${id}/`,
