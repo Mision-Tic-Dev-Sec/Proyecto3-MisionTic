@@ -11,6 +11,8 @@ const Ventas2 = () => {
   const [vendedores, setVendedores] = useState([]);
   const [productos, setProductos] = useState([]);
   const [productosTabla, setProductosTabla] = useState([]);
+  
+
 
   useEffect(() => {
     const fetchVendores = async () => {
@@ -42,6 +44,8 @@ const Ventas2 = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     const fd = new FormData(form.current);
+    
+    
 
     const formData = {};
     fd.forEach((value, key) => {
@@ -73,12 +77,12 @@ const Ventas2 = () => {
     const datosVenta = {
       vendedor: vendedores.filter((v) => v._id === formData.vendedor)[0].name,
       cantidad: formData.cantidad,
-      valorVenta: formData.valorVenta,      
+      valorVenta: formData.valorVenta,
       productos: listaProductos,
-      idVenta: formData.idVenta,      
+      idVenta: formData.idVenta,
       fechaVenta: formData.fechaVenta,
       idCliente: formData.idCliente,
-      nombreCliente: formData.nombreCliente,      
+      nombreCliente: formData.nombreCliente,
       estado: formData.estado,
     };
 
@@ -88,14 +92,17 @@ const Ventas2 = () => {
       datosVenta,
       (response) => {
         console.log(response);
-        toast.success('Producto agregado con éxito');
+        toast.success('Venta agregada con éxito');
+        
       },
       (error) => {
         console.error(error);
-        toast.error('Error creando un producto');
+        toast.error('Error creando venta');
       }
       
     );
+    console.log("redireccionar")
+    window.location.href = "/ventas"    
   };
 
   return (
@@ -126,7 +133,7 @@ const Ventas2 = () => {
             <option disabled value=''>
               Seleccione un Vendedor
             </option>
-            {vendedores.filter(el => el.state==="Autorizado").map((el) => {
+            {vendedores.filter(el => el.state === "Autorizado").map((el) => {
               return <option key={nanoid()} value={el._id}>{`${el.name}`}</option>;
             })}
           </select>
@@ -168,25 +175,25 @@ const Ventas2 = () => {
         </label>
         <label className='flex flex-col' htmlFor='estado'>
           <span className='text-2xl font-gray-900 font-semibold'>Estado</span>
-            <select
-              className='p-2 mb-2'
-              name='estado'
-              required
-              defaultValue=''
-            >
-              <option disabled value=''>
-                Seleccione una opción
-              </option>
-              <option>En proceso</option>
-              <option>Entregado</option>
-              <option>Cancelado</option>
-            </select>
+          <select
+            className='p-2 mb-2'
+            name='estado'
+            required
+            defaultValue=''
+          >
+            <option disabled value=''>
+              Seleccione una opción
+            </option>
+            <option>En proceso</option>
+            <option>Entregado</option>
+            <option>Cancelado</option>
+          </select>
         </label>        
           <button
             type='submit'
             className='col-span-2 bg-green-400 p-2 rounded-full shadow-md hover:bg-green-600 text-white'
-          >          
-            Crear Venta          
+          >
+            Crear Venta
           </button>       
         <ToastContainer position='bottom-center' autoClose={5000} />
       </form>
