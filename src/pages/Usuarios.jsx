@@ -77,14 +77,14 @@ const Usuarios = () => {
         <h2 className='text-3xl font-extrabold text-gray-900'>
           Página de administración de Usuarios
         </h2>
-        <button
+{/*         <button
           onClick={() => {
             setMostrarTabla(!mostrarTabla);
           }}
           className={`text-white bg-${colorBoton}-500 p-3 rounded-lg m-3 w-48 self-center`}
         >
           {textoBoton}
-        </button>
+        </button> */}
       </div>
       <TablaUsuarios listaUsuarios={usuarios} setEjecutarConsulta={setEjecutarConsulta} loading={loading}/>
      {/*  {mostrarTabla ? (
