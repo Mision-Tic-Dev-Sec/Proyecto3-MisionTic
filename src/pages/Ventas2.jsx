@@ -88,14 +88,15 @@ const Ventas2 = () => {
       datosVenta,
       (response) => {
         console.log(response);
-        toast.success('Producto agregado con éxito');
+        toast.success('Venta agregada con éxito');
       },
       (error) => {
         console.error(error);
-        toast.error('Error creando un producto');
+        toast.error('Error creando una venta');
       }
       
     );
+    window.location.href = "/ventas"
   };
 
   return (
