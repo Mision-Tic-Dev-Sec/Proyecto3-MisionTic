@@ -61,45 +61,19 @@ const VentaProductos = () => {
 
 const CantidadProducto = ({ venta, producto, index }) => {
   const [cantidad, setCantidad] = useState(producto.cantidad);
-  const actualizarVenta = async (cantidad)=>{
-    venta.productos[index].cantidad = cantidad
-    await editarVenta (venta._id, venta)
-  }
+  // const actualizarVenta = async (cantidad)=>{
+  //   venta.productos[index].cantidad = cantidad
+  //   await editarVenta (venta._id, venta)
+  // }
 
-  useEffect(()=>{
-      actualizarVenta(cantidad)
-  },[cantidad])
-  // useEffect(() => {
-  //   const editVenta = async () => {
-  //     await editarVenta(
-  //       el._id,
-  //       { cantidad },
-  //       (res) => {
-  //         console.log(res);
-  //       },
-  //       (err) => {
-  //         console.error(err);
-  //       }
-  //     );
-  //   };
-  //   if (ele.cantidad !== cantidad) {
-  //     editVenta();
-  //   }
-  // }, [cantidad, ele]);
-
-  return (
-      <input type="text" value={cantidad} onChange={(e)=>setCantidad(e.target.value)} />
-  );
-};
-
-const EstadoUsuario = ({ user }) => {
-  const [estado, setEstado] = useState(user.estado ?? '');
-
+  // useEffect(()=>{
+  //     actualizarVenta(cantidad)
+  // },[cantidad])
   useEffect(() => {
-    const editUsuario = async () => {
-      await editarUsuario(
-        user._id,
-        { estado },
+    const editVenta = async () => {
+      await editarVenta(
+        venta._id,
+        { producto : {cantidad} },
         (res) => {
           console.log(res);
         },
@@ -108,29 +82,14 @@ const EstadoUsuario = ({ user }) => {
         }
       );
     };
-    if (user.estado !== estado) {
-      editUsuario();
+    if (producto.cantidad !== cantidad) {
+      editVenta();
     }
-  }, [estado, user]);
+  }, [cantidad, venta]);
 
   return (
-    <select value={estado} onChange={(e) => setEstado(e.target.value)}>
-      <option value='' disabled>
-        Seleccione un estado
-      </option>
-      <option value='autorizado' className='text-green-500'>
-        Autorizado
-      </option>
-      <option value='pendiente' className='text-yellow-500'>
-        Pendiente
-      </option>
-      <option value='rechazado' className='text-red-500'>
-        Rechazado
-      </option>
-    </select>
+      <input type="text" value={cantidad} onChange={(e)=>setCantidad(e.target.value)} />
   );
 };
-
-
 
 export default VentaProductos;
