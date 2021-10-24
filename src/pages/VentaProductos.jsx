@@ -1,9 +1,6 @@
-import PrivateComponent from 'components/PrivateComponent';
-import { nanoid } from 'nanoid';
 import React, { useState, useEffect } from 'react';
-import { editarUsuario } from 'utils/api';
-import { obtenerUsuarios } from 'utils/api';
-import { obtenerVentas, editarVenta} from 'utils/api'
+import { obtenerVentas, editarVenta } from 'utils/api'
+import { Tooltip } from '@material-ui/core';
 
 const VentaProductos = () => {
   const [ventas, setVentas] = useState([]);
@@ -25,33 +22,35 @@ const VentaProductos = () => {
 
   return (
     <div>
-      <div>admin usuarios</div>
-    
+      <h1 className='text-center text-2xl font-bold'>Productos venta</h1>
+
       <table className='tabla'>
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Estado</th>
-            <th>Rol</th>
+            <th>idVenta</th>
+            <th>Producto</th>
+            <th>precio</th>
+            <th>cantidad</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           {ventas.map((venta) => {
-            return (
-              <tr key={nanoid()}>
-                {venta.productos.map((producto, index)=>{
-                  return (
-                    <tr key={nanoid()} className='flex'>
-                      <td>{producto.precio}</td>
-                      <td>
-                        <CantidadProducto index={index} venta={venta} producto={producto} />
-                      </td>
-                      <td>{producto.nombreProducto}</td>
-                    </tr>
-                  )})}                                
-              </tr>
-            );
+            return venta.productos.map((producto) => {
+              return (
+                <tr key={producto._id}>
+                  <td>{venta.idVenta}</td>
+                  <td>{producto.nombreProducto}</td>
+                  <td>{producto.precio}</td>
+                  <td>{producto.cantidad}</td>
+                  <td>
+                    <Tooltip title='Eliminar producto' arrow>
+                      <i className='fas fa-trash text-red-700 hover:text-red-500' />
+                    </Tooltip>
+                  </td>
+                </tr>
+              )
+            })
           })}
         </tbody>
       </table>
@@ -73,7 +72,7 @@ const CantidadProducto = ({ venta, producto, index }) => {
     const editVenta = async () => {
       await editarVenta(
         venta._id,
-        { producto : {cantidad} },
+        { ...venta, productos: { [index]: { ...[index], cantidad: cantidad } } },
         (res) => {
           console.log(res);
         },
@@ -88,7 +87,7 @@ const CantidadProducto = ({ venta, producto, index }) => {
   }, [cantidad, venta]);
 
   return (
-      <input type="text" value={cantidad} onChange={(e)=>setCantidad(e.target.value)} />
+    <input type="text" value={cantidad} onChange={(e) => setCantidad(e.target.value)} />
   );
 };
 

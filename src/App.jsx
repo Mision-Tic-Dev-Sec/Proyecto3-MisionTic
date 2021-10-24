@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PublicLayout from 'layouts/PublicLayout';
 import Inicio from 'pages/Inicio';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
